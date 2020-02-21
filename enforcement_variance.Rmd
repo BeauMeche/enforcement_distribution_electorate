@@ -1,0 +1,45 @@
+---
+title: "Replication: 'The Distributive Politics of Enforcement'"
+author: "Beau Meche"
+date: "2/21/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# toolbox
+library(tidyverse)
+library(foreign)
+```
+
+#### Title:
+The Distributive Politics of Enforcement
+
+
+#### Author:
+Alisha C. Holland
+
+
+###### <u>A Quote from the Abstract:</u>
+
+"Why do some politicians tolerate the violation of the law? In contexts where the poor are the primary violators of property laws, I argue that the answer lies in the electoral costs of enforcement: Enforcement can decrease support from poor voters even while it generates support among nonpoor voters. Using an original data set on unlicensed street vending and enforcement operations at the subcity district level in three Latin American capital cities, I show that the combination of voter demographics and electoral rules explains enforcement. Supported by qualitative interviews, these findings suggest how the intentional nonenforcement of law, or forbearance, can be an electoral strategy. Dominant theories based on state capacity poorly explain the results." 
+
+- Alisha C. Holland <br>
+<a href="https://doi.org/10.1111/ajps.12125">Perma-link to the article publication here!</a>
+
+
+```{r load_and_triage_data, echo = FALSE}
+
+# this project was done in STATA, so transcribing the code will likely be rough
+# as my knowledge of STATA is negligible
+
+
+# may as well take everything out of the zip file
+
+unzip("Holland_dataverse_repl_01.zip")
+
+enforcement <- read.dta("Enforcement.dta")
+
+```
+
