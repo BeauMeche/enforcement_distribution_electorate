@@ -17,6 +17,7 @@
 
 # Cross-Sectional Analysis: Poisson Models
 # Each city is run separately.
+
 preserve
 keep if city=="bogota"  
 ** keep if city == "lima"
@@ -50,17 +51,24 @@ keep if city=="bogota"
 # more math: defining and interpreting stdev ranges on the 'lower' variable data
 
     # Moving from 10 to 50 percent lower class district is 1.77 sd in Lima:
+    
       nlcom exp(_b[slower]*1.77)-1
+      
     # And from 10 to 50 percent lower class district is 2.129 sd in Santiago so:
+      
       nlcom exp(_b[slower]*2.129)-1
+      
     # Simulations for the predicted number of operations using clarify produce similar results:
+      
       estsimp poisson operations lower vendors budget population, vce(robust)
     setx mean
     setx lower 10
     simqi, ev 
     setx lower 50
     simqi, ev 
+    
     # Change in the budget in Lima
+    
     nlcom exp(_b[sbudget]*1.968)-1
     
 # more of the same for the other cities in the study, I don't need to repeat work here
@@ -80,6 +88,7 @@ nlcom exp(_b[smargin])-1
 # Model 3: Decentralized Cities, Add Interaction of Lower Class and Political Competition 
 
 # Create interaction 
+
 generate margin_lower = margin * lower
 egen smargin_lower = std(margin_lower)
 
@@ -95,6 +104,7 @@ nlcom exp(_b[slower]+_b[smargin_lower]*1)-1
 nlcom exp(_b[slower]+_b[smargin_lower]*3)-1
 
 # Model 4: Partisan Affiliation (Santiago Only)
+
 preserve 
 keep if city == "santiago"
 poisson operations slower svendors sbudget spopulation right, vce(robust)
@@ -105,6 +115,7 @@ nlcom exp(_b[spopulation])-1
 nlcom exp(_b[right])-1
 
 # Model 5: Valence Crime, Santiago
+
 poisson arrests slower sreports sbudget spopulation right, vce(robust)
 nlcom exp(_b[slower])-1
 nlcom exp(_b[sreports])-1
@@ -125,6 +136,7 @@ sort city
 # different police behavior than richer, nicer cities
 
 by city: correlate corruption lower
+
 # Note that the scale is reversed in the article
 
 by city: correlate corruption lower
@@ -134,9 +146,11 @@ by city: correlate corruption lower
 # Number of bureaucrats who believe corruption is common
 
 by city: count if corruption < 5
+
 # Number of bureaucrats who believe politics is main constraint on enforcement 
 #(note the categories
       # "5" and "6" were commonly understood by bureaucrats to mean "both" and so I consider only strong responses.
+      
       count if constraint <5 & city == "lima"
       
       # FIGURE 4
@@ -180,10 +194,14 @@ by city: count if corruption < 5
       
       estsimp poisson operationsm lower vendors budget population, vce(robust)
       setx mean
+      
       # Evaluate for vendors from 0-15
+      
       setx vendors 0
       simqi, ev 
+      
       # Evaluate for poverty 10-60
+      
       setx lower 10
       simqi, ev 
       
@@ -191,10 +209,15 @@ by city: count if corruption < 5
       
       # Table 1: Summary statistics 
       # Bogota 
+      
       sutex operations lower vendors budget population costs corruption poor police tax, minmax
+      
       # Lima
+      
       sutex operations lower vendors budget population margin costs corruption poor police emp tax salary, minmax
+      
       # Santiago
+      
       sutex operations lower vendors budget population margin costs corruption right arrests reports poor police emp tax salary, minmax
       
       # Check alternative vendor specifications from government sources 
@@ -211,6 +234,7 @@ by city: count if corruption < 5
       
       # Model 1:
         # Robustness check for district poverty measure 
+      
       egen spoor = std(poor)
       poisson operations spoor svendors sbudget spopulation, vce(robust)
       nlcom exp(_b[spoor])-1
@@ -220,6 +244,7 @@ by city: count if corruption < 5
       
       # Model 2
       # Robustness check for negative binomial specification due to concerns about overdispersion 
+      
       nbreg operations spoor svendors sbudget spopulation, vce(robust)
       fitstat
       nlcom exp(_b[spoor])-1
@@ -243,6 +268,7 @@ by city: count if corruption < 5
       # Table 3, Cross-Sectional Analysis: Additional Capacity Measures
       
       # Model 1: Police
+      
       egen spolice  = std(police)
       poisson operations spoor svendors sbudget spopulation spolice, vce(robust)
       nlcom exp(_b[spoor])-1
@@ -252,6 +278,7 @@ by city: count if corruption < 5
       nlcom exp(_b[spolice])-1
       
       # Model 2: Administrative personnel (available for Lima and Santiago)
+      
       egen semp  = std(employees)
       poisson operations spoor svendors sbudget spopulation semp, vce(robust)
       nlcom exp(_b[spoor])-1
@@ -261,6 +288,7 @@ by city: count if corruption < 5
       nlcom exp(_b[semp])-1
       
       # Model 3: Tax 
+      
       egen stax = std(tax)
       poisson operations spoor svendors sbudget spopulation stax, vce(robust)
       nlcom exp(_b[spoor])-1
@@ -270,6 +298,7 @@ by city: count if corruption < 5
       nlcom exp(_b[stax])-1
       
       # Model 4: Salary per employee (available for Lima and Santiago)
+      
       egen ssalary = std(salary)
       poisson operations spoor svendors sbudget spopulation ssalary, vce(robust)
       nlcom exp(_b[spoor])-1
