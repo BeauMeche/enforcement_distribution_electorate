@@ -20,6 +20,9 @@ The Distributive Politics of Enforcement
 #### Author:
 Alisha C. Holland
 
+###### Overview: 
+This paper looks at police behavior in varying contexts around Latin America to explore what gets prosecuted and what is allowed to go unnoticed. The areas of interest are the relationships between constituency of the powers that be (at a given time) and how much those individuals in the constituent groups care to have property rights enforced. Involving (what I believe is) original research, the author does an intriguing job of addressing this question in a rather Bayesian way, so I thought this would be a good project on a topic that I briefly studied previously and can now apply new skills to.  
+
 
 ###### <u>A Quote from the Abstract:</u>
 
@@ -42,4 +45,31 @@ unzip("Holland_dataverse_repl_01.zip")
 enforcement <- read.dta("Enforcement.dta")
 
 ```
+
+
+#### Initial Data Exploration
+```{r data_exploration, echo=FALSE}
+
+# variable "lower" is the share of lower-class residents in a given district
+
+glimpse(enforcement)
+
+
+enforcement %>% 
+  filter(city == "lima") %>%
+  ggplot(aes(x = corruption, y = operations)) +
+  geom_point(aes(color = poor)) +
+  labs(
+    title = "Corruption Coefficients and Police Activity",
+    x = "Number of Operations",
+    y = "Corruption Scale",
+    color = "% Poor
+Population"
+  ) +
+  scale_x_continuous(breaks = (seq(0,20, by= 2)))
+
+# currently can't seem to use lm()... unsure why...
+
+```
+
 
