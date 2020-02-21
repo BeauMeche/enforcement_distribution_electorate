@@ -1,2 +1,3 @@
-# enforcement_distribution_electorate
 This will be an attempted replication of the data analysis from a paper by Alisha C. Holland in analyzing how law enforcement is distributed across districts with varying constituency combinations.
+
+The paper in question, titled "The Distributive Politics of Enforcement", looks at police behavior in varying contexts around Latin America to explore what gets prosecuted and what is allowed to go unnoticed. The areas of interest are the relationships between constituency of the powers that be (at a given time) and how much those individuals in the constituent groups care to have property rights enforced. Involving (what I believe is) original research, the author does an intriguing job of addressing this question in a rather Bayesian way, so I thought this would be a good project on a topic that I briefly studied previously and can now apply new skills to. 
