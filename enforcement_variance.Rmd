@@ -40,13 +40,8 @@ This paper looks at police behavior in varying contexts around Latin America to 
 
 "Why do some politicians tolerate the violation of the law? In contexts where the poor are the primary violators of property laws, I argue that the answer lies in the electoral costs of enforcement: Enforcement can decrease support from poor voters even while it generates support among nonpoor voters. Using an original data set on unlicensed street vending and enforcement operations at the subcity district level in three Latin American capital cities, I show that the combination of voter demographics and electoral rules explains enforcement. Supported by qualitative interviews, these findings suggest how the intentional nonenforcement of law, or forbearance, can be an electoral strategy. Dominant theories based on state capacity poorly explain the results." 
 
--Alisha C. Holland <br>
-[@Holland14] <br>
-<br>
-<br>
-<br>
-<br>
-
+-Alisha C. Holland
+[@Holland14]
 
 ```{r load_and_triage_data, echo = FALSE}
 # this was the link code before I did the bibliography: 
@@ -64,11 +59,9 @@ enforcement <- read.dta("Enforcement.dta")
 
 ```
 
+My code repository is linked at the end of the document if you're interested.^[[Check Out My Repo Here!](https://github.com/BeauMeche/enforcement_distribution_electorate)]
 
-My code repository is linked at the end of the document if you're interested.
-[@BMeche_proj_repo]
-
-
+\newpage
 #### Initial Data Exploration
 ```{r data_exploration, echo=FALSE}
 
@@ -97,6 +90,45 @@ Population"
 
 
 
+
+
+\newpage
+#### An Interesting Chart of Average Arrest Rates per District in Santiago, Chile
+
+I am unsure what's going on with Santiago, Santiago, but that is a question for later. 
+```{r mstone_4_gtTable, echo=FALSE}
+
+gt1 <- enforcement %>% 
+  filter(city == "santiago") %>% 
+  select(arrests, city, district, population) %>% 
+  # mutate(marrest = mean(arrests),
+  #        mcorrupt = mean(corruption),
+  #        mtax = mean(tax)) %>% 
+  mutate(arrpercap = round(arrests/population, 3)) %>% 
+  group_by(district) %>% 
+  drop_na() %>% 
+  summarise(avg_arrestPC = mean(arrpercap))
+
+gt1 %>% 
+  # mutate(avg_arrests = round(`mean(arrests)`, 2)) %>%
+  # select(!`mean(arrests)`) %>%
+  arrange(desc(avg_arrestPC)) %>%
+  gt() %>% 
+  fmt_percent(columns = vars(avg_arrestPC)) %>% 
+  cols_label(avg_arrestPC = "Arrest Rate",
+             district = "District") %>% 
+  tab_header(
+    title = "Average Per Capita Arrest Rate per District",
+    subtitle = "Districts from the city of Santiago"
+    ) 
+
+
+```
+
+
+
+
+\newpage
 #### References: 
 
 
