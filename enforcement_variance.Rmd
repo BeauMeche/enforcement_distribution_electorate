@@ -59,7 +59,7 @@ enforcement <- read.dta("Enforcement.dta")
 
 ```
 
-My code repository is linked at the end of the document if you're interested.^[[Check Out My Repo Here!](https://github.com/BeauMeche/enforcement_distribution_electorate)]
+My work has been documented and logged on github.^[[Check Out My Repo Here!](https://github.com/BeauMeche/enforcement_distribution_electorate)]
 
 \newpage
 #### Initial Data Exploration
