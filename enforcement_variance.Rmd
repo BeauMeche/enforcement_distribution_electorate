@@ -24,12 +24,11 @@ library(gt)
 library(bibtex)
 ```
 
-#### Title:
+#### Credit Where it is Due:
 The Distributive Politics of Enforcement
 
 
-#### Author:
-Alisha C. Holland
+Authored by: Alisha C. Holland
 
 
 #### Overview: 
@@ -124,6 +123,17 @@ gt1 %>%
 
 
 ```
+
+
+#### Regression Table Attempt
+Stata would be nicer most likely, but here goes...
+
+```{r regressions1, echo=FALSE}
+
+
+
+```
+
 
 
 
