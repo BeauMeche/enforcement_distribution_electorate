@@ -22,6 +22,7 @@ library(stargazer)
 library(tinytex)
 library(gt)
 library(bibtex)
+library(rstanarm)
 ```
 
 #### Credit Where it is Due:
@@ -124,12 +125,33 @@ gt1 %>%
 
 ```
 
-
+\newpage
 #### Regression Table Attempt
 Stata would be nicer most likely, but here goes...
+The data used can be found in my github repo [@BMeche_proj_repo].
+
+All regressions are prediction models of the number of police operations, in this case all operations in lima. Particularly interesting is the regression (4), where the glm regression predicts a decrease of $\approx 28$ operations on average when the district is poor vs. when it is not... things seem to change when the core constituency changes. 
 
 ```{r regressions1, echo=FALSE}
 
+# attempting to use the stargazer package... we'll see how this goes
+lima <- enforcement %>% 
+  filter(city == "lima")
+
+
+m1 <- lm(data = lima, operations ~ vendors)
+
+m2 <- lm(data = lima, operations ~ vendors + lower)
+
+m3 <- lm(data = lima, operations ~ vendors + lower + budget)
+
+m4 <- glm(data = lima, operations ~ poordistrict)
+
+# couldn't get the top lables to cooperate, but the meat of the exercise is here
+
+# check out the binary regression (4)... poor constituents get less harassments... wild
+
+stargazer(m1, m2, m3, m4, type = "text")
 
 
 ```
