@@ -9,7 +9,7 @@ link_citations: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
 # toolbox
 
@@ -23,6 +23,8 @@ library(tinytex)
 library(gt)
 library(bibtex)
 library(rstanarm)
+library(ggthemes)
+
 ```
 
 #### Credit Where it is Due:
@@ -43,7 +45,7 @@ This paper looks at police behavior in varying contexts around Latin America to 
 -Alisha C. Holland
 [@Holland14]
 
-```{r load_and_triage_data, echo = FALSE}
+```{r load_and_triage_data}
 # this was the link code before I did the bibliography: 
 # <a href="https://github.com/BeauMeche/enforcement_distribution_electorate">link</a>
 
@@ -57,6 +59,8 @@ unzip("Holland_dataverse_repl_01.zip")
 
 enforcement <- read.dta("Enforcement.dta")
 
+enforce1 <- read_tsv("Enforcement.tab")
+
 ```
 
 My work has been documented and logged on github.^[[Check Out My Repo Here!](https://github.com/BeauMeche/enforcement_distribution_electorate)]
@@ -67,7 +71,7 @@ My work has been documented and logged on github.^[[Check Out My Repo Here!](htt
 
 # variable "lower" is the share of lower-class residents in a given district
 
-glimpse(enforcement)
+glimpse(enforce1)
 
 
 enforcement %>% 
@@ -83,7 +87,6 @@ Population"
   ) +
   scale_x_continuous(breaks = (seq(0,20, by= 2)))
 
-# currently can't seem to use lm()... unsure why...
 
 ```
 
@@ -108,19 +111,19 @@ gt1 <- enforcement %>%
   group_by(district) %>% 
   drop_na() %>% 
   summarise(avg_arrestPC = mean(arrpercap))
-
-gt1 %>% 
-  # mutate(avg_arrests = round(`mean(arrests)`, 2)) %>%
-  # select(!`mean(arrests)`) %>%
-  arrange(desc(avg_arrestPC)) %>%
-  gt() %>% 
-  fmt_percent(columns = vars(avg_arrestPC)) %>% 
-  cols_label(avg_arrestPC = "Arrest Rate",
-             district = "District") %>% 
-  tab_header(
-    title = "Average Per Capita Arrest Rate per District",
-    subtitle = "Districts from the city of Santiago"
-    ) 
+# 
+# gt1 %>% 
+#   # mutate(avg_arrests = round(`mean(arrests)`, 2)) %>%
+#   # select(!`mean(arrests)`) %>%
+#   arrange(desc(avg_arrestPC)) %>%
+#   gt() %>% 
+#   fmt_percent(columns = vars(avg_arrestPC)) %>% 
+#   cols_label(avg_arrestPC = "Arrest Rate",
+#              district = "District") %>% 
+#   tab_header(
+#     title = "Average Per Capita Arrest Rate per District",
+#     subtitle = "Districts from the city of Santiago"
+#     ) 
 
 
 ```
@@ -151,10 +154,164 @@ m4 <- glm(data = lima, operations ~ poordistrict)
 
 # check out the binary regression (4)... poor constituents get less harassments... wild
 
+```
+
+
+```{r, results='asis'}
+
 stargazer(m1, m2, m3, m4, type = "text")
 
+```
+
+```{r figure3_TL, echo=FALSE}
+
+top_left <- enforce1 %>% 
+  mutate(poordistrict = as.integer(poordistrict)) %>% 
+  filter(city == "bogota") %>% 
+  select(poordistrict, operations, vendors)
+
+fit_a <- stan_glm(data = top_left, operations ~ vendors, refresh = 0)
+
+# this is the plot for Bogota
+
+TL <- top_left %>% 
+  ggplot(aes(y = operations, x = vendors)) + 
+  geom_point(aes(shape = factor(poordistrict))) + 
+  scale_y_continuous(limits = c(0, 30), 
+                     breaks = c(0, 5, 10, 15, 20, 25, 30)) +
+  scale_x_continuous(limits = c(0, 12),
+                     breaks = seq(0, 12, 2)) +
+  geom_abline(slope = coef(fit_a)[2], 
+              intercept = coef(fit_a)[1]) +
+  labs(
+    title = "",
+    x = "Unlicensed Vendors (thousands), Bogotá",
+    y = "Police Operations",
+    shape = "non-poor, poor")  + 
+  theme(legend.position="bottom")
 
 ```
+
+
+```{r fig3_TR, warning=F}
+
+# missing value warning, unsure why, blocked for milestone 5
+
+# this is the plot for Lima
+
+top_right <- enforce1 %>% 
+  mutate(poordistrict = as.integer(poordistrict)) %>% 
+  filter(city == "lima") %>% 
+  select(poordistrict, operations, vendors)
+
+fit_b <- stan_glm(data = top_right, operations ~ vendors, refresh = 0)
+
+TR <- top_right %>% 
+  ggplot(aes(y = operations, x = vendors)) + 
+  geom_point(aes(shape = factor(poordistrict))) + 
+  scale_y_continuous(limits = c(0, 80), 
+                     breaks = seq(0,80, 20)) +
+  scale_x_continuous(limits = c(0, 12),
+                     breaks = seq(0, 12, 2)) +
+  geom_abline(slope = coef(fit_b)[2], 
+              intercept = coef(fit_b)[1]) +
+  labs(
+    title = "",
+    x = "Unlicensed Vendors (thousands), Lima",
+    y = "Police Operations",
+    shape = "non-poor, poor")  + 
+  theme(legend.position="bottom")
+
+```
+
+```{r fig3_BL, echo=F}
+
+# this is the plot for Santiago
+
+bot_left <- enforce1 %>% 
+  mutate(poordistrict = as.integer(poordistrict)) %>% 
+  filter(city == "santiago") %>% 
+  select(poordistrict, operations, vendors)
+
+fit_c <- stan_glm(data = bot_left, operations ~ vendors, refresh = 0)
+
+BL <- bot_left %>% 
+  ggplot(aes(y = operations, x = vendors)) + 
+  geom_point(aes(shape = factor(poordistrict))) + 
+  scale_y_continuous(limits = c(0, 20), 
+                     breaks = seq(0,80, 20)) +
+  scale_x_continuous(limits = c(0, 12),
+                     breaks = seq(0, 12, 2)) +
+  geom_abline(slope = coef(fit_c)[2], 
+              intercept = coef(fit_c)[1]) +
+  labs(
+    title = "",
+    x = "Unlicensed Vendors (thousands), Santiago",
+    y = "Police Operations",
+    shape = "non-poor, poor")  + 
+  theme(legend.position="bottom")
+
+```
+
+```{r fig3_BR, warning=F}
+
+# this is the plot for Santiago (crime reports)
+
+bot_right <- enforce1 %>% 
+  mutate(poordistrict = as.integer(poordistrict)) %>% 
+  filter(city == "santiago") %>% 
+  select(poordistrict, arrests, reports)
+
+fit_d <- stan_glm(data = bot_right, arrests ~ reports, refresh = 0)
+
+BR <- bot_right %>% 
+  ggplot(aes(y = arrests, x = reports)) + 
+  geom_point(aes(shape = factor(poordistrict))) + 
+  scale_y_continuous(limits = c(0, 20), 
+                     breaks = seq(0, 20, 5)) +
+  scale_x_continuous(limits = c(0, 60),
+                     breaks = seq(0, 60, 10)) +
+  geom_abline(slope = coef(fit_d)[2], 
+              intercept = coef(fit_d)[1]) +
+  labs(
+    title = "",
+    x = "Crime Reports (thousands), Santiago",
+    y = "Police Arrests (thousands)",
+    shape = "non-poor, poor") + 
+  theme(legend.position="bottom")
+
+```
+
+
+\newpage
+
+#### Appendix: 
+```{r fig3_grid, warning=F}
+
+library(cowplot)
+
+plot_grid(TL, TR,BL, BR)
+
+```
+
+
+![This is Holland's 'Figure 3' for reference: ]("holland_figure3_appendix_pic.png")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -162,5 +319,6 @@ stargazer(m1, m2, m3, m4, type = "text")
 
 \newpage
 #### References: 
+
 
 
