@@ -27,6 +27,7 @@ library(ggthemes)
 
 ```
 
+
 #### Credit Where it is Due:
 The Distributive Politics of Enforcement
 
@@ -45,6 +46,7 @@ This paper looks at police behavior in varying contexts around Latin America to 
 -Alisha C. Holland
 [@Holland14]
 
+
 ```{r load_and_triage_data}
 
 # this was the link code before I did the bibliography: 
@@ -60,12 +62,15 @@ unzip("Holland_dataverse_repl_01.zip")
 
 enforcement <- read.dta("Enforcement.dta")
 
-enforce1 <- read_tsv("Enforcement.tab")
-
+enforce1 <- read_tsv("Enforcement.tab", 
+                      col_types = cols(.default = col_double(),
+                                       city = col_character(),
+                                       district = col_character()))
 
 ```
 
 My work has been documented and logged on github.^[[Check Out My Repo Here!](https://github.com/BeauMeche/enforcement_distribution_electorate)]
+
 
 \newpage
 #### Initial Data Exploration
@@ -193,7 +198,6 @@ TL <- top_left %>%
 
 ```
 
-
 ```{r fig3_TR, warning=F}
 
 # missing value warning, unsure why, blocked for milestone 5
@@ -283,11 +287,10 @@ BR <- bot_right %>%
 
 ```
 
-
 \newpage
 
 #### Appendix: 
-```{r fig3_grid, warning=F}
+```{r fig3_grid, warning=F, message=F}
 
 library(cowplot)
 
@@ -295,8 +298,4 @@ plot_grid(TL, TR,BL, BR)
 
 ```
 
-
 ![This is Holland's Figure 3 for reference: ]("holland_figure3_appendix_pic.png")
-
-
-
