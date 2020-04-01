@@ -40,7 +40,7 @@ This paper looks at police behavior in varying contexts around Latin America to 
 
 #### <u>A Quote from the Abstract:</u>
 
-"Why do some politicians tolerate the violation of the law? In contexts where the poor are the primary violators of property laws, I argue that the answer lies in the electoral costs of enforcement: Enforcement can decrease support from poor voters even while it generates support among nonpoor voters. Using an original data set on unlicensed street vending and enforcement operations at the subcity district level in three Latin American capital cities, I show that the combination of voter demographics and electoral rules explains enforcement. Supported by qualitative interviews, these findings suggest how the intentional nonenforcement of law, or forbearance, can be an electoral strategy. Dominant theories based on state capacity poorly explain the results." 
+"Why do some politicians tolerate the violation of the law? In contexts where the poor are the primary violators of property laws, I argue that the answer lies in the electoral costs of enforcement: Enforcement can decrease support from poor voters even while it generates support among nonpoor voters. Using an original data set on unlicensed street vending and enforcement operations at the subcity district level in three Latin American capital cities, I show that the combination of voter demographics and electoral rules explains enforcement. Supported by qualitative interviews, these findings suggest how the intentional nonenforcement of law, or forbearance, can be an electoral strategy. Dominant theories based on state capacity poorly explain the results."^[[“All analysis and output code for this replication project as well as the original paper are available here. ](https://github.com/BeauMeche/enforcement_distribution_electorate)]
 
 -Alisha C. Holland
 [@Holland14]
@@ -60,12 +60,16 @@ unzip("Holland_dataverse_repl_01.zip")
 
 enforcement <- read.dta("Enforcement.dta")
 
-enforce1 <- read_tsv("Enforcement.tab")
+enforce1 <- read_tsv("Enforcement.tab",
+                     col_types = cols(
+  .default = col_double(),
+  city = col_character(),
+  district = col_character()))
 
 
 ```
 
-My work has been documented and logged on github.^[[Check Out My Repo Here!](https://github.com/BeauMeche/enforcement_distribution_electorate)]
+
 
 \newpage
 #### Initial Data Exploration
@@ -283,15 +287,50 @@ BR <- bot_right %>%
 
 ```
 
+```{r, message=F, warning = F}
+# table 2 partial replication w/ standardized coefficients
+# mimicing the methods in the stata code file
+
+library(robustHD)
+
+tab2 <- enforce1 %>% 
+  filter(city == "bogota") %>% 
+  mutate(slower = standardize(x = lower, centerFun = mean, 
+                              scaleFun = sd),
+         svendors = standardize(x = vendors, centerFun = mean,
+                                scaleFun = sd),
+         sbudget = standardize(x = budget, 
+                               centerFun = mean,
+                               scaleFun = sd),
+         spop = standardize(x = population,
+                                   centerFun = mean,
+                                   scaleFun = sd))
+
+fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2, family = poisson(link = "log"))
+
+
+```
+
+```{r, message=F, warning=F}
+
+stargazer(fit_t2, type = "text")
+
+```
+
+
+
 
 \newpage
 
 #### Appendix: 
-```{r fig3_grid, warning=F}
+```{r fig3_grid, message=F, warning=F}
 
 library(cowplot)
 
-plot_grid(TL, TR,BL, BR)
+plot_grid(TL, TR)
+
+plot_grid(BL, BR)
 
 ```
 
