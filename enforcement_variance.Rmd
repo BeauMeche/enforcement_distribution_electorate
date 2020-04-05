@@ -102,12 +102,13 @@ enforce1 <- read_tsv("Enforcement.tab",
 
 
 \newpage
-#### An Interesting Chart of Average Arrest Rates per District in Santiago, Chile
 
-I am unsure what's going on with Santiago, Santiago, but that is a question for later. 
+#### Proposed Extension and Addition to Human knowledge: 
+
 ```{r mstone_4_gtTable, echo=FALSE}
 
-# no longer need teh gt table for this project
+# no longer need the gt table for this project
+# this page will have the project extension proposal on it
 
 # gt1 <- enforcement %>% 
 #   filter(city == "santiago") %>% 
@@ -451,7 +452,7 @@ enforce1 <- enforce1 %>%
 # mimicing the regression from the stata file (that is unlike the regression used
 # in the regression table)
 
-fit_f2 <- glm(m.ops ~ lower + vendors + budget + population,
+fit_f2 <- glm(operations ~ lower + vendors + budget + population,
               data = enforce1, family = poisson(link = "log"))
 
 # the source code says to re-run the prediction code under various conditions, 
@@ -463,14 +464,20 @@ new.lower1 <- data.frame(lower = seq(0,100,10),
                          budget = mean(enforce1$budget),
                          population = mean(enforce1$population))
 
-# new.lower2 <- data.frame(lower = seq(0,100, 10),
-#                          vendors = seq(0,15,1),
-#                          budget = mean(enforce1$budget),
-#                          population = mean(enforce1$population))
+new.lower2 <- data.frame(lower = mean(enforce1$lower),
+                         vendors = seq(0,15,1),
+                         budget = mean(enforce1$budget),
+                         population = mean(enforce1$population))
 
-# pred1 <- predict(fit_f2, newdata = new.lower1)
-# 
-# pred2 <- predict(fit_f2, newdata = new.lower2)
+pred1 <- predict(fit_f2, newdata = new.lower1)
+
+pred2 <- predict(fit_f2, newdata = new.lower2)
+
+q1 <- cbind(pred1, pred2)
+
+# plot(q1)
+
+    # error: number of rows of result is not a multiple of vector length (arg 1)
 
 # output code that is ugly and thus kept out of the knit product
 
@@ -478,14 +485,56 @@ new.lower1 <- data.frame(lower = seq(0,100,10),
 # plot(pred2)
 # print(fit_f2)
 
-  
-
-# enforce1 %>%
-
 # plot(y = enforce1$operations, x = pred1)
 
 
 ```
+
+```{r fig_2_placeholder, warning=F}
+
+# removing message about removed rows
+
+bog_mean <- pull(op_mean[1,2])
+
+pt1 <- enforce1 %>%
+  filter(lower >= 0 & lower <= 70) %>% 
+  ggplot(aes(y = operations/bog_mean,
+             x = lower)) +
+  geom_smooth(aes(group = city,
+                color = city),
+                method = "glm",
+                se = T) +
+  scale_y_continuous(limits = c(0,5),
+                     breaks = seq(0,5,1)) +
+  scale_x_continuous(breaks = seq(0,70,20)) +
+  labs(
+    title = "The following graphs are my closest attempt at figure 2",
+    y = "operations / average ops. in Bogota",
+    x = "Percent lower class"
+  )
+
+
+pt2 <- enforce1 %>%
+  filter(vendors >= 0 & vendors <= 12) %>% 
+  ggplot(aes(y = operations/bog_mean,
+             x = vendors)) +
+  geom_smooth(aes(group = city,
+                color = city),
+                method = "glm",
+                se = T) +
+  scale_y_continuous(limits = c(0,5),
+                     breaks = seq(0,5,1)) +
+  scale_x_continuous(breaks = seq(0,12,3)) +
+  labs(
+    y = "operations / average ops. in Bogota",
+    x = "Unlicensed Vendors (thousands)"
+  )
+
+pt1; pt2
+
+
+```
+
 
 
 
