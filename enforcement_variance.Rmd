@@ -105,6 +105,11 @@ enforce1 <- read_tsv("Enforcement.tab",
 
 #### Proposed Extension and Addition to Human knowledge: 
 
+al;sdkfja;sldkfj;a
+as;dflkja;sdlfkja;
+adsf;lakjs;dflkajs;d
+as;dflkjja;slkfjd;askl
+
 ```{r mstone_4_gtTable, echo=FALSE}
 
 # no longer need the gt table for this project
@@ -332,7 +337,7 @@ BR <- bot_right %>%
 
 ```
 
-```{r, message=F, warning = F}
+```{r, bogota_regression, message=F, warning = F}
 # table 2 partial replication w/ standardized coefficients
 # mimicing the methods in the stata code file
 
@@ -354,8 +359,13 @@ tab2 <- enforce1 %>%
 fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
               data = tab2, family = poisson(link = "log"))
 
+# stargazer(fit_t2, type = "text")
+
 
 ```
+
+
+
 
 \newpage
 #### This is my attempted replication of one of Holland's regression tables. 
@@ -473,7 +483,7 @@ pred1 <- predict(fit_f2, newdata = new.lower1)
 
 pred2 <- predict(fit_f2, newdata = new.lower2)
 
-q1 <- cbind(pred1, pred2)
+# q1 <- cbind(pred1, pred2)
 
 # plot(q1)
 
@@ -534,6 +544,113 @@ pt1; pt2
 
 
 ```
+###### Bogota
+```{r, bogota_regression2, message=F, warning = F}
+# table 2 partial replication w/ standardized coefficients
+# mimicing the methods in the stata code file
+
+library(robustHD)
+
+tab2 <- enforce1 %>% 
+  filter(city == "bogota") %>% 
+  mutate(slower = standardize(x = lower, centerFun = mean, 
+                              scaleFun = sd),
+         svendors = standardize(x = vendors, centerFun = mean,
+                                scaleFun = sd),
+         sbudget = standardize(x = budget, 
+                               centerFun = mean,
+                               scaleFun = sd),
+         spop = standardize(x = population,
+                                   centerFun = mean,
+                                   scaleFun = sd))
+
+fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2, family = poisson(link = "log"))
+
+stargazer(fit_t2, type = "text")
+
+
+```
+###### Lima
+```{r lima_regressions, message=F, warning=F}
+
+# tab2_lima
+
+tab2l <- enforce1 %>% 
+  filter(city == "lima") %>% 
+  mutate(slower = standardize(x = lower, centerFun = mean, 
+                            scaleFun = sd),
+       svendors = standardize(x = vendors, centerFun = mean,
+                              scaleFun = sd),
+       sbudget = standardize(x = budget, 
+                             centerFun = mean,
+                             scaleFun = sd),
+       spop = standardize(x = population,
+                                 centerFun = mean,
+                                 scaleFun = sd),
+       smargin = standardize(x = margin, centerFun = mean,
+                             scaleFun = sd),
+       int_ML = lower * margin,
+       s.int_ML = standardize(x = int_ML, centerFun = mean,
+                              scaleFun = sd))
+
+fit_t2_lim1 <- glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2l, family = poisson(link = "log"))
+
+fit_t2_lim2 <- glm(operations ~ slower + svendors + sbudget + spop + smargin,
+              data = tab2l, family = poisson(link = "log"))
+
+fit_t2_lim3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
+                     s.int_ML,
+              data = tab2l, family = poisson(link = "log"))
+
+stargazer(fit_t2_lim1, fit_t2_lim2, fit_t2_lim3, type = "text")
+  
+
+```
+###### Santiago
+```{r santiago_regressions, warning=F, message=F}
+
+# tab2_santiago
+
+tab2s <- enforce1 %>% 
+  filter(city == "santiago") %>% 
+  mutate(slower = standardize(x = lower, centerFun = mean, 
+                            scaleFun = sd),
+       svendors = standardize(x = vendors, centerFun = mean,
+                              scaleFun = sd),
+       sbudget = standardize(x = budget, 
+                             centerFun = mean,
+                             scaleFun = sd),
+       spop = standardize(x = population,
+                                 centerFun = mean,
+                                 scaleFun = sd),
+       smargin = standardize(x = margin, centerFun = mean,
+                             scaleFun = sd),
+       int_ML = lower * margin,
+       s.int_ML = standardize(x = int_ML, centerFun = mean,
+                              scaleFun = sd))
+
+fit_t2_s1 <- glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2s, family = poisson(link = "log"))
+
+fit_t2_s2 <- glm(operations ~ slower + svendors + sbudget + spop + smargin,
+              data = tab2s, family = poisson(link = "log"))
+
+fit_t2_s3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
+                     s.int_ML,
+              data = tab2s, family = poisson(link = "log"))
+
+fit_t2_s4 <- glm(operations ~ slower + svendors + sbudget + spop + right,
+              data = tab2s, family = poisson(link = "log"))
+
+fit_t2_s5 <- glm(operations ~ slower + svendors + sbudget + spop + right + arrests,
+              data = tab2s, family = poisson(link = "log"))
+
+stargazer(fit_t2_s1, fit_t2_s2, fit_t2_s3, fit_t2_s4, fit_t2_s5, type = "text")
+
+```
+
 
 
 
