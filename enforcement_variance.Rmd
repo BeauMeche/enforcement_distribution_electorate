@@ -107,29 +107,31 @@ enforce1 <- read_tsv("Enforcement.tab",
 I am unsure what's going on with Santiago, Santiago, but that is a question for later. 
 ```{r mstone_4_gtTable, echo=FALSE}
 
-gt1 <- enforcement %>% 
-  filter(city == "santiago") %>% 
-  select(arrests, city, district, population) %>% 
-  # mutate(marrest = mean(arrests),
-  #        mcorrupt = mean(corruption),
-  #        mtax = mean(tax)) %>% 
-  mutate(arrpercap = round(arrests/population, 3)) %>% 
-  group_by(district) %>% 
-  drop_na() %>% 
-  summarise(avg_arrestPC = mean(arrpercap))
+# no longer need teh gt table for this project
 
-gt1 %>%
-  # mutate(avg_arrests = round(`mean(arrests)`, 2)) %>%
-  # select(!`mean(arrests)`) %>%
-  arrange(desc(avg_arrestPC)) %>%
-  gt() %>%
-  fmt_percent(columns = vars(avg_arrestPC)) %>%
-  cols_label(avg_arrestPC = "Arrest Rate",
-             district = "District") %>%
-  tab_header(
-    title = "Average Per Capita Arrest Rate per District",
-    subtitle = "Districts from the city of Santiago"
-    )
+# gt1 <- enforcement %>% 
+#   filter(city == "santiago") %>% 
+#   select(arrests, city, district, population) %>% 
+#   # mutate(marrest = mean(arrests),
+#   #        mcorrupt = mean(corruption),
+#   #        mtax = mean(tax)) %>% 
+#   mutate(arrpercap = round(arrests/population, 3)) %>% 
+#   group_by(district) %>% 
+#   drop_na() %>% 
+#   summarise(avg_arrestPC = mean(arrpercap))
+# 
+# gt1 %>%
+#   # mutate(avg_arrests = round(`mean(arrests)`, 2)) %>%
+#   # select(!`mean(arrests)`) %>%
+#   arrange(desc(avg_arrestPC)) %>%
+#   gt() %>%
+#   fmt_percent(columns = vars(avg_arrestPC)) %>%
+#   cols_label(avg_arrestPC = "Arrest Rate",
+#              district = "District") %>%
+#   tab_header(
+#     title = "Average Per Capita Arrest Rate per District",
+#     subtitle = "Districts from the city of Santiago"
+#     )
 
 
 ```
@@ -173,6 +175,7 @@ m4 <- glm(data = lima, operations ~ poordistrict)
 
 ```
 
+
 ```{r figure3_TL, echo=FALSE}
 
 top_left <- enforce1 %>% 
@@ -195,12 +198,48 @@ TL <- top_left %>%
               intercept = coef(fit_a)[1]) +
   labs(
     title = "",
-    x = "Unlicensed Vendors (thousands), Bogotá",
+    x = "Unlicensed Vendors (thousands), Bogota",
     y = "Police Operations",
     shape = "non-poor, poor")  + 
-  theme(legend.position="bottom")
+  theme(legend.position = "bottom")
+
 
 ```
+
+```{r}
+
+# fake data replication to resolve a ggplot query: ignore this code chunk
+
+
+# library(tidyverse)
+# 
+# data(mtcars)
+# 
+# mtcars %>%  
+#   ggplot(aes(y = cyl, x = hp)) + 
+#   geom_point(aes(shape = factor(am))) + 
+#   labs(x = "horse power rating",
+#        y = "cylinders")
+# 
+# 
+# 
+#   
+# library(tidyverse)
+# 
+# data(mtcars)
+# 
+# reprex(
+# 
+# mtcars %>%  
+#   ggplot(aes(y = cyl, x = hp)) + 
+#   geom_point(aes(shape = factor(am))) + 
+#   labs(x = "horse power rating",
+#        y = "cylinders")
+# )
+
+
+```
+
 
 
 ```{r fig3_TR, warning=F}
@@ -358,6 +397,7 @@ dataverse at: https://doi.org/10.1111/ajps.12125",
         shape = "Poor District Binary")  + 
   theme_hc() +
   theme(legend.position="bottom")
+
 ```
 
 
@@ -366,19 +406,87 @@ dataverse at: https://doi.org/10.1111/ajps.12125",
 #### Appendix: 
 
 
-Relationships between Enforcement, Offenses, and District Poverty by City
+
 ```{r fig3_grid, message=F, warning=F}
 
 library(cowplot)
 
-plot_grid(TL, TR)
+plot_grid(TL, TR); plot_grid(BL, BR)
 
-plot_grid(BL, BR)
+```
+![This is Holland's Figure 3 for reference: ]("holland_figure3_appendix_pic.png")
+
+```{r figure_4_holland_rep}
+
+# this is all code in attempt to replicate the methods, which I understand, 
+# used in the replication done in stata. 
+
+# within figure 2, poisson regression predictions divided by the average predictions # is the y-axis value. I have managed to get some kind of prediction output, but 
+# am currently unable to correlate that information back to the data in a usable/ 
+# meaningful way. 
+
+# this was a calculation for the mean operation count by city
+# to check my hunch from the stata file... which was correct : )
+
+op_mean <- enforce1 %>% 
+  group_by(city) %>% 
+  summarize(mean(operations)) %>% 
+  arrange()
+  
+
+ # dummy code that was functional but irrelevant
+# 
+# mutate(exp_div_avg_ops = case_when(
+#     city == "bogota" ~ operations/8.8947,
+#     city == "lima" ~ operations/8.8947,
+#     city == "santiago" ~ operations/8.8947)) %>%
+#   ungroup() %>%
+#   select(operations, exp_div_avg_ops, vendors, lower, city)
+
+# created an average operations row
+
+enforce1 <- enforce1 %>% 
+  mutate(m.ops = mean(operations))
+
+# mimicing the regression from the stata file (that is unlike the regression used
+# in the regression table)
+
+fit_f2 <- glm(m.ops ~ lower + vendors + budget + population,
+              data = enforce1, family = poisson(link = "log"))
+
+# the source code says to re-run the prediction code under various conditions, 
+# this is my working attempt at this with "new" data as we have done in class
+# and also how I understand predicted / expected value to work
+
+new.lower1 <- data.frame(lower = seq(0,100,10),
+                         vendors = mean(enforce1$vendors),
+                         budget = mean(enforce1$budget),
+                         population = mean(enforce1$population))
+
+# new.lower2 <- data.frame(lower = seq(0,100, 10),
+#                          vendors = seq(0,15,1),
+#                          budget = mean(enforce1$budget),
+#                          population = mean(enforce1$population))
+
+# pred1 <- predict(fit_f2, newdata = new.lower1)
+# 
+# pred2 <- predict(fit_f2, newdata = new.lower2)
+
+# output code that is ugly and thus kept out of the knit product
+
+# plot(pred1)
+# plot(pred2)
+# print(fit_f2)
+
+  
+
+# enforce1 %>%
+
+# plot(y = enforce1$operations, x = pred1)
+
 
 ```
 
-
-![This is Holland's Figure 3 for reference: ]("holland_figure3_appendix_pic.png")
 
 
 
