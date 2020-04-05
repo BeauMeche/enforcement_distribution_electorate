@@ -655,12 +655,12 @@ stargazer(fit_t2,
           fit_t2_lim1, fit_t2_lim2, fit_t2_lim3,
           fit_t2_s1, fit_t2_s2, fit_t2_s3, fit_t2_s4, fit_t2_s5,
           title = "Santiago",
-          dep.var.labels = c("Bogota", "Lima", "Lima", "Lima", "Santiago", "Santiago",
-                              "Santiago", "Santiago", "Santiago"),
           covariate.labels=c("Lower", "Vendors", "Budget", "Population", "Margin",
                              "Margin*Lower", "Right", "Reports"),
           float.env = "sidewaystable", 
-          no.space = TRUE)
+          no.space = TRUE,
+          column.labels = c("Bogota", "Lima", "Santiago"),
+          column.separate = c(1, 3, 5))
 
 ```
 
