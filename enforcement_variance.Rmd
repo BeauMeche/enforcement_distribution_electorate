@@ -418,6 +418,8 @@ dataverse at: https://doi.org/10.1111/ajps.12125",
 
 #### Appendix: 
 
+I was unable to recreate one graphic on account of not having access to political adn temporal data that would allow me to create teh graphic showing class gradient, budget, operations, and politicians in power for certain time frames. Otherwise, I have replicated or attempted to replicate all of the major analyses in the paper with the data I have access to. The preliminary supply/demand graphic in the paper is one made from dummy data as a means to mock up the concept in the introduction and not an analysis core to the data itself. 
+
 
 
 ```{r fig3_grid, message=F, warning=F}
@@ -569,7 +571,7 @@ tab2 <- enforce1 %>%
 fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
               data = tab2, family = poisson(link = "log"))
 
-stargazer(fit_t2, type = "text")
+# stargazer(fit_t2, type = "text")
 
 
 ```
@@ -606,7 +608,7 @@ fit_t2_lim3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
                      s.int_ML,
               data = tab2l, family = poisson(link = "log"))
 
-stargazer(fit_t2_lim1, fit_t2_lim2, fit_t2_lim3, type = "text")
+# stargazer(fit_t2_lim1, fit_t2_lim2, fit_t2_lim3, type = "text")
   
 
 ```

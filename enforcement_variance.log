@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.3.31)  5 APR 2020 18:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.3.31)  5 APR 2020 19:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -572,7 +572,7 @@ File: enforcement_variance_files/figure-latex/fig3_grid-1.pdf Graphic file (typ
 e pdf)
 <use enforcement_variance_files/figure-latex/fig3_grid-1.pdf>
 Package pdftex.def Info: enforcement_variance_files/figure-latex/fig3_grid-1.pd
-f  used on input line 219.
+f  used on input line 228.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <enforcement_variance_files/figure-latex/fig3_grid-2.pdf, id=63, 469.755pt x 32
 5.215pt>
@@ -580,21 +580,21 @@ File: enforcement_variance_files/figure-latex/fig3_grid-2.pdf Graphic file (typ
 e pdf)
 <use enforcement_variance_files/figure-latex/fig3_grid-2.pdf>
 Package pdftex.def Info: enforcement_variance_files/figure-latex/fig3_grid-2.pd
-f  used on input line 220.
+f  used on input line 229.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <holland_figure3_appendix_pic.png, id=64, 419.76825pt x 314.3745pt>
 File: holland_figure3_appendix_pic.png Graphic file (type png)
 <use holland_figure3_appendix_pic.png>
 Package pdftex.def Info: holland_figure3_appendix_pic.png  used on input line 2
-21.
+30.
 (pdftex.def)             Requested size: 419.78001pt x 314.3833pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 219--222
+Underfull \hbox (badness 10000) in paragraph at lines 228--231
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 219--222
+Underfull \hbox (badness 10000) in paragraph at lines 228--231
 []
  []
 
@@ -605,7 +605,7 @@ File: enforcement_variance_files/figure-latex/fig_2_placeholder-1.pdf Graphic f
 ile (type pdf)
 <use enforcement_variance_files/figure-latex/fig_2_placeholder-1.pdf>
 Package pdftex.def Info: enforcement_variance_files/figure-latex/fig_2_placehol
-der-1.pdf  used on input line 223.
+der-1.pdf  used on input line 232.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <enforcement_variance_files/figure-latex/fig_2_placeholder-2.pdf, id=77, 469.75
 5pt x 325.215pt>
@@ -613,51 +613,46 @@ File: enforcement_variance_files/figure-latex/fig_2_placeholder-2.pdf Graphic f
 ile (type pdf)
 <use enforcement_variance_files/figure-latex/fig_2_placeholder-2.pdf>
 Package pdftex.def Info: enforcement_variance_files/figure-latex/fig_2_placehol
-der-2.pdf  used on input line 224.
+der-2.pdf  used on input line 233.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--226
+Underfull \hbox (badness 10000) in paragraph at lines 232--235
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--226
+Underfull \hbox (badness 10000) in paragraph at lines 232--235
 []
  []
 
 [7 <./enforcement_variance_files/figure-latex/fig3_grid-2.pdf> <./holland_figur
 e3_appendix_pic.png>] [8 <./enforcement_variance_files/figure-latex/fig_2_place
 holder-1.pdf>]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-27.
-(c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [9 <./enforcement_variance_files/figure-latex/fig_2_placeholder-2.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 347.
-[10] [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 347.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 289.
+[9 <./enforcement_variance_files/figure-latex/fig_2_placeholder-2.pdf>] [10]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 289.
 (./enforcement_variance.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 347.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 347.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 289.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 289.
 Package rerunfilecheck Info: File `enforcement_variance.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 347.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 289.
  ) 
 Here is how much of TeX's memory you used:
- 10632 strings out of 482938
- 154847 string characters out of 5958758
- 410437 words of memory out of 5000000
- 25669 multiletter control sequences out of 15000+600000
- 582182 words of font info for 64 fonts, out of 8000000 for 9000
+ 10590 strings out of 482938
+ 154154 string characters out of 5958758
+ 403437 words of memory out of 5000000
+ 25632 multiletter control sequences out of 15000+600000
+ 581863 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 34i,12n,37p,291b,460s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.
-enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-m
-athit.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
-m/lm-mathsy.enc}<c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
+ 34i,12n,37p,291b,323s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
+hit.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
+lm-mathsy.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvi
+ps/lm/lm-ec.enc}<c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
 /public/lm/lmbx10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts
 /type1/public/lm/lmmi10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist
 /fonts/type1/public/lm/lmr10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf
@@ -668,12 +663,11 @@ yTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Beau_M/AppData/Roaming
 ming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Beau_M/AppData
 /Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/Beau_M/A
 ppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/Be
-au_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Use
-rs/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on enforcement_variance.pdf (11 pages, 328193 bytes).
+au_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
+Output written on enforcement_variance.pdf (10 pages, 300612 bytes).
 PDF statistics:
- 177 PDF objects out of 1000 (max. 8388607)
- 136 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
+ 169 PDF objects out of 1000 (max. 8388607)
+ 130 compressed objects within 2 object streams
+ 31 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
