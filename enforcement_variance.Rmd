@@ -107,10 +107,14 @@ enforce1 <- read_tsv("Enforcement.tab",
 
 #### Proposed Extension and Addition to Human knowledge: 
 
-al;sdkfja;sldkfj;a
-as;dflkja;sdlfkja;
-adsf;lakjs;dflkajs;d
-as;dflkjja;slkfjd;askl
+Extending this academic work presents a particular challenge. The core of this research hinges on original data collected by the author through interviews and collection of data on site in Colombia, Chile, and Peru – places I have never been to nor have the means to go to now. In addition to this, there is at this point data missing from my possession that is temporal in nature. My ideal extension of this work relies on this temporal data.
+
+As this paper was published in 2015, I would like to do an analysis of those same cities with data from the last five years. After making sure that the political and electoral systems are acceptably similar to the conditions which were posited in Holland’s work, it would be great to be able to test her methods as predictive models and observe their accuracy. This opens up a discussion regardless of the congruence, as high similarity supports her arguments and her modeling work and significant differences pose any number of questions about what has changed in the political sphere in the differential city. 
+
+That said, and pending the not-insignificant chance that this data continues to be unavailable, I would like to further explore the concerns of reverse causality in this paper, either through instrumental variable regression or through the causal methods that we will cover in the near future in 1006. I was fascinated by the work and the logic in Holland’s paper, but there were several points of concern that I think warrant more testing and exploration to see whether these assumptions hold or whether they are conjecture that would lead to significant differences between the model’s predictions as mentioned above and reality now or in the future. In addition to this, and in the Bayesian spirit of data analysis, I think it would be interesting to look at the current data where decentralized is a binary variable and use this to look at whether this would be an informative practice in supporting Holland’s original work. 
+
+As a third alternative, I am relatively familiar with OECD and health-related data sourcing. Holland showed in some ways how demographic variables were not necessarily informative to the topic of the study, but health and wellness data could be informative; especially in a setting where budget and poverty are core drivers and points of information. I do have the intuition at this point that I would still be relying on access to the temporal dataset used in the paper that is not included in the dataverse. 
+
 
 ```{r mstone_4_gtTable, echo=FALSE}
 
