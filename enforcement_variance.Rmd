@@ -215,6 +215,11 @@ TL <- top_left %>%
     shape = "non-poor, poor")  + 
   theme(legend.position = "bottom")
 
+#pch
+
+#resize box / scale box
+
+#piazza post about rescaling tables
 
 ```
 
@@ -366,6 +371,10 @@ fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
               data = tab2, family = poisson(link = "log"))
 
 # stargazer(fit_t2, type = "text")
+
+# poisson[] for reg model? 
+
+# my.poisson.mod <- glm(fatalities ~ attack, family = "poisson", data = mydata)
 
 
 ```
@@ -552,7 +561,7 @@ pt1; pt2
 
 
 ```
-###### Bogota
+
 ```{r, bogota_regression2, message=F, warning = F}
 # table 2 partial replication w/ standardized coefficients
 # mimicing the methods in the stata code file
@@ -579,7 +588,7 @@ fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
 
 
 ```
-###### Lima
+
 ```{r lima_regressions, message=F, warning=F}
 
 # tab2_lima
