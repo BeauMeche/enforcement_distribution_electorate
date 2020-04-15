@@ -29,14 +29,14 @@ library(ggthemes)
 
 ```
 
-#### Credit Where it is Due:
+#### Credit:
 The Distributive Politics of Enforcement
 
 
-Authored by: Alisha C. Holland
+Author: Alisha C. Holland
 
 
-#### Overview: 
+#### Introduction and Overview: 
 
 This paper looks at police behavior in varying contexts around Latin America to explore what gets prosecuted and what is allowed to go unnoticed. The areas of interest are the relationships between constituency of the powers that be (at a given time) and how much those individuals in the constituent groups care to have property rights enforced. Involving a great deal of original research, the author does an intriguing job of addressing this question in a rather Bayesian way, so I thought this would be a good project on a topic that I briefly studied previously and can now apply new skills to. 
 
@@ -114,6 +114,15 @@ As this paper was published in 2015, I would like to do an analysis of those sam
 That said, and pending the not-insignificant chance that this data continues to be unavailable, I would like to further explore the concerns of reverse causality in this paper, either through instrumental variable regression or through the causal methods that we will cover in the near future in 1006. I was fascinated by the work and the logic in Holland’s paper, but there were several points of concern that I think warrant more testing and exploration to see whether these assumptions hold or whether they are conjecture that would lead to significant differences between the model’s predictions as mentioned above and reality now or in the future. In addition to this, and in the Bayesian spirit of data analysis, I think it would be interesting to look at the current data where decentralized is a binary variable and use this to look at whether this would be an informative practice in supporting Holland’s original work. 
 
 As a third alternative, I am relatively familiar with OECD and health-related data sourcing. Holland showed in some ways how demographic variables were not necessarily informative to the topic of the study, but health and wellness data could be informative; especially in a setting where budget and poverty are core drivers and points of information. I do have the intuition at this point that I would still be relying on access to the temporal dataset used in the paper that is not included in the dataverse. 
+
+Updated: My extension to this will focus on the role of missing data imputation and the underlying logic. 
+
+
+\newpage
+
+#### Literature Review
+
+abcdefghijklmnop
 
 
 ```{r mstone_4_gtTable, echo=FALSE}
@@ -215,6 +224,10 @@ TL <- top_left %>%
     shape = "non-poor, poor")  + 
   theme(legend.position = "bottom")
 
+
+# _______________________
+# notes from meeting with Alice
+
 #pch
 
 #resize box / scale box
@@ -223,7 +236,7 @@ TL <- top_left %>%
 
 ```
 
-```{r}
+```{r fake_data_reprex}
 
 # fake data replication to resolve a ggplot query: ignore this code chunk
 
@@ -382,18 +395,22 @@ fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
 
 
 
-\newpage
-#### This is my attempted replication of one of Holland's regression tables. 
 
-The regression type is a log-likelihood regression. This regression was solely for Bogotá.
 
 ```{r, message=F, warning=F, results='asis'}
+# 
+# \newpage
+# #### This is my attempted replication of one of Holland's regression tables. 
+# 
+# The regression type is a log-likelihood regression. This regression was solely for Bogotá.
 
-stargazer(fit_t2)
+# stargazer(fit_t2)
+
+# ![This is the Bogota section of Holland's table 2 for reference: ]("table2_bogota_portion_replication.png")
 
 ```
 
-![This is the Bogota section of Holland's table 2 for reference: ]("table2_bogota_portion_replication.png")
+
 
 
 \newpage
@@ -431,7 +448,7 @@ dataverse at: https://doi.org/10.1111/ajps.12125",
 
 #### Appendix: 
 
-I was unable to recreate one graphic on account of not having access to political adn temporal data that would allow me to create teh graphic showing class gradient, budget, operations, and politicians in power for certain time frames. Otherwise, I have replicated or attempted to replicate all of the major analyses in the paper with the data I have access to. The preliminary supply/demand graphic in the paper is one made from dummy data as a means to mock up the concept in the introduction and not an analysis core to the data itself. 
+I was unable to recreate one graphic on account of not having access to political and temporal data that would allow me to create the graphic showing class gradient, budget, operations, and politicians in power for certain time frames. Otherwise, I have replicated or attempted to replicate all of the major analyses in the paper with the data I have access to. Items made by the author with data unaccessible and graphs pertaining to only theory were not replicated on basis of not being relevant to course scope. 
 
 
 
@@ -557,7 +574,7 @@ pt2 <- enforce1 %>%
     x = "Unlicensed Vendors (thousands)"
   )
 
-pt1; pt2
+# pt1; pt2
 
 
 ```
@@ -625,7 +642,7 @@ fit_t2_lim3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
   
 
 ```
-###### Santiago
+
 
 ```{r santiago_regressions, warning=F, message=F, results='asis'}
 
