@@ -122,7 +122,11 @@ Updated: My extension to this will focus on the role of missing data imputation 
 
 #### Literature Review
 
-abcdefghijklmnop
+The author of this paper has become relatively well known for her research and her findings in the realm of forbearance and electoral impacts relative to low income populations in Latin America. In the literature published after this particular paper in 2014, a majority of it has also been authored by Holland and so far as I can tell there are few contradictions to be seen. The setting of the cases observed in this research is one where vendors of various goods are 'guilty' of using public space to peddle their private enterprises. This gives the police forces the ability to, within the letter of the law, arrest or otherwise enforce the statute that they are unlicensed to the space in question and that they should vacate. The reality tangent to this is that these vendors are also voters, and they are unlikely to forget the political head of the forces inhibiting their livelihood. Holland cites Colombia's National Data Archive with respect to the aspect that these vendors often do tend to rely on thier 'unlicensed incomes' as they are usually quite low-ranking in the income distribution.
+
+Without digressing into Holland's research or the other supporting research again, it seems intuitive that where there is a majority of voters comprised of these individuals in the lower income distribution range who may rely, or know someone who relies, on secondary income to sustain themselves you would find that the local government would be less harsh on these cases of unregistered free markets. In fact, since this paper was published other authors have found cases where the government actually incentivizes the collaboration or unionization of these unregistered individuals as a sort of subset of the economy [@Hummel17]. 
+
+Overall this vein of inquiry has fascinating ramifications in electoral predictions and voter behavior, especially in cases where statistical analyses show decreased sensitivities to potentially exogenous enforcement factors like department budgets and other angles. Carefully constructed models slowly begin to point their fingers toward constituency as a large driver of enforcement behaviors; and while I would prefer to see a few more rigors in the process, I tend to be convinced by the findings available thus far. 
 
 
 ```{r mstone_4_gtTable, echo=FALSE}
