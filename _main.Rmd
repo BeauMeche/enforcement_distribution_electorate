@@ -907,16 +907,11 @@ loo_compare(looS4, looS5)
 ```
 
 
-```{r rendering, eval=F}
+```{r rendering}
 
-# these are supposed to publish a bookdown doc, but they are largely useless and create the error: 
-# 
-# Error in bookdown::render_book(input = "Meche_enforcement_variance.Rmd") : 
-#   The file _main.Rmd exists. Please delete it if it was automatically generated, or set a different book_filename option in _bookdown.yml. If you are sure it can be safely deleted, please set the option 'delete_merged_file' to true in _bookdown.yml.
+bookdown::render_book(input = "Meche_enforcement_variance.Rmd")
 
-# bookdown::render_book(input = "Meche_enforcement_variance.Rmd")
-# 
-# bookdown::publish_book()
+bookdown::publish_book()
 
 ```
 
@@ -934,4 +929,7 @@ loo_compare(looS4, looS5)
 
 
 
+
+
+<!--chapter:end:Meche_enforcement_variance.Rmd-->
 

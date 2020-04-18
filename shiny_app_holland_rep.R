@@ -1,5 +1,8 @@
 library(shiny)
 
+# I have made this app as simple as I can possibly make it and it still won't publish
+# I don't know what to do next, so I will have to wait for OH to resolve this issue
+
 ui <- navbarPage("Replication: The Distributive Politics of Enforcement",
 
             tabPanel("Replication Paper",
