@@ -1,10 +1,11 @@
 library(shiny)
 
-ui <- navbarPage("Meche, Beau Replication Project",
+ui <- navbarPage("Replication: The Distributive Politics of Enforcement",
 
             tabPanel("Replication Paper",
-                     mainPanel(tags$iframe(style = "height:400px; width:100%; scrolling=yes",
-                                           src = "Meche_enforcement_variance.pdf"))
+                     mainPanel(
+                       uiOutput("my_pdf1")
+                     )
                      ),
             tabPanel("Credits",
                      htmlOutput("acknowledgements"))
@@ -22,7 +23,7 @@ server <- function(input, output) {
     
     '<h4><b>Acknoweldgements:</b></h4>
         <ul>
-          <li>Thanks to Dr. David Kane, Alice Xu, Debora Gonzalez, Robert McKenzie, Maria Burzillo, <br/> and 
+          <li>Thanks to Dr. David Kane, Alice Xu, Debora Gonzalez, Robert McKenzie, Maria Burzillo, and 
           the rest of the Spring 2020 edition of Gov 1006 (may it go down in history) for all of the help and advice. 
           <li>I would also like to thank Rstudio and Rstudio Community for providing so many exceptional resources.</li>
         </ul>
@@ -30,6 +31,10 @@ server <- function(input, output) {
       Contact: beau_meche@college.harvard.edu<br/>
       <a href="https://www.linkedin.com/in/beaumeche22/">Connect on LinkedIn</a>'
     
+  })
+  
+  output$my_pdf1 <- renderUI({
+    tags$iframe(style="height:600px; width:100%", src="Meche_enforcement_variance.pdf")
   })
   
 }
