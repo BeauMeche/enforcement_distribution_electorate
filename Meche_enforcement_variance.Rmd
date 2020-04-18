@@ -706,6 +706,9 @@ With regard to missing data analysis, there were no points of concern as there w
 
 ```{r extension_missing_data, message=F, warning=F}
 
+## commented code here was used in feeling out the nature of the missing data
+## Upon exploration, I realized that there is no real concern for said missing data in this case, only
+
 library(mice)
 library(naniar)
 
@@ -726,14 +729,109 @@ enforce1 %>%
   select(right, reports, arrests, salary, 
          margin, employees, city) %>% 
   gg_miss_var(facet = city,
-              show_pct = T)
+              show_pct = T) +
+  labs(title = "Missing data by City",
+       caption = "Original data collected by the author of the basis paper: A. Holland")
 
 ```
 
 
 ```{r extension_model_types}
 
+# this will be a regression table like the previous one, only calculated with 
+# Bayesian methods through the rstanarm package and with predictions based on 
+# the median values of the prediction distribution of the 1000 iterations
+# implicit to Bayesian methods and to stan_glm specifically. 
+
+# Bogota regression: 
+bogreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2, family = poisson, refresh = 0)
+
+limreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2l, family = poisson(link = "log"), refresh = 0)
+
+limreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
+              data = tab2l, family = poisson(link = "log"), refresh = 0)
+
+limreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
+                     s.int_ML, 
+                    data = tab2l, family = poisson(link = "log"), refresh = 0)
+
+santreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2s, family = poisson(link = "log"), refresh = 0)
+
+santreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
+              data = tab2s, family = poisson(link = "log"), refresh = 0)
+
+santreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
+                     s.int_ML,
+              data = tab2s, family = poisson(link = "log"), refresh = 0)
+
+santreg4 <- stan_glm(operations ~ slower + svendors + sbudget + spop + right,
+              data = tab2s, family = poisson(link = "log"), refresh = 0)
+
+santreg5 <- stan_glm(operations ~ slower + svendors + sbudget + spop + 
+                  right + arrests,
+              data = tab2s, family = poisson(link = "log"), refresh = 0)
+
+
+# # stargazer(santreg1)
+# 
+#           # ,
+#           # limreg1, limreg2, limreg3,
+#           # santreg1, santreg2, santreg3, santreg4, santreg5)
+# 
+# 
+#           # ,
+#           # title = "Bayesian Model Conversion: ",
+#           # covariate.labels=c("Lower", "Vendors", "Budget", "Population", "Margin",
+#           #                    "Margin*Lower", "Right", "Reports"),
+#           # # float.env = "sidewaystable",
+#           # no.space = TRUE,
+#           # column.labels = c("Bogota", "Lima", "Santiago"),
+#           # column.separate = c(1, 3, 5),
+#           # type = "text")
+# 
+# 
+# # summary(z, digits = 4)
+# # summary(q, digits = 4)
+
 ```
+
+
+###### Bogota: Bayesian regression
+```{r bogreg1}
+
+print(bogreg1)
+
+```
+
+###### Lima: Bayesian Regressions
+(1)
+```{r limreg1}
+
+print(limreg1)
+
+```
+
+(2)
+```{r limreg2}
+
+print(limreg2)
+
+```
+
+(3)
+```{r limmreg3}
+
+print(limreg3)
+
+```
+
+
+
+
+
 
 
 
