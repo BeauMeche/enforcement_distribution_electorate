@@ -872,7 +872,6 @@ looS2 <- loo(santreg2, k_threshold = 0.7)
 
 looS3 <- loo(santreg3, k_threshold = 0.7)
 
-
 ```
 
 
