@@ -699,6 +699,43 @@ stargazer(fit_t2,
           column.separate = c(1, 3, 5))
 
 ```
+\newpage
+#### Extension:
+
+With regard to missing data analysis, there were no points of concern as there were no regression analyses that incorporated missing data. below you can see the summary of data missing from the onset, but at the level of analyses, the individual cities, there were no calculations done on variables with incomplete sets of information. 
+
+```{r extension_missing_data, message=F, warning=F}
+
+library(mice)
+library(naniar)
+
+# enforce1 %>% 
+#   filter(city == "santiago") %>% 
+# miss_var_summary()
+
+# selecting these because they are the only cases of NA values
+
+# enforce1 %>% 
+#   select(right, reports, arrests, salary, margin, employees) %>% 
+#   gg_miss_var(show_pct = T) +
+#   labs(title = "Variables with missing values:",
+#        y = "Percent of values missing") +
+#   scale_y_continuous(breaks = seq(0,70,5))
+
+enforce1 %>% 
+  select(right, reports, arrests, salary, 
+         margin, employees, city) %>% 
+  gg_miss_var(facet = city,
+              show_pct = T)
+
+```
+
+
+```{r extension_model_types}
+
+```
+
+
 
 
 
