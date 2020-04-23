@@ -1,17 +1,12 @@
 library(shiny)
 
-<<<<<<< HEAD
-# I have made this app as simple as I can possibly make it and it still won't publish
-# I don't know what to do next, so I will have to wait for OH to resolve this issue
+
 
 ui <- navbarPage("Replication: The Distributive Politics of Enforcement",
-=======
-ui <- navbarPage("Meche, Beau Replication Project",
->>>>>>> parent of d476d68... shiny refuses to publish my work
 
             tabPanel("Replication Paper",
                      mainPanel(tags$iframe(style = "height:400px; width:100%; scrolling=yes",
-                                           src = "Meche_enforcement_variance.pdf"))
+                                           src = "Meche_politics_dist_rep.pdf"))
                      ),
             tabPanel("Credits",
                      htmlOutput("acknowledgements"))
