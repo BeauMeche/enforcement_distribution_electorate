@@ -651,11 +651,19 @@ tab2s <- enforce1 %>%
        spop = standardize(x = population,
                                  centerFun = mean,
                                  scaleFun = sd),
+       sreports = standardize(x = reports,
+                                centerFun = mean,
+                                scaleFun = sd),
        smargin = standardize(x = margin, centerFun = mean,
                              scaleFun = sd),
        int_ML = lower * margin,
        s.int_ML = standardize(x = int_ML, centerFun = mean,
-                              scaleFun = sd))
+                              scaleFun = sd),
+       
+       # the poisson regression requires integers as poisson models 
+       # are based on counts
+       
+       arrest_T = as.integer(arrests * 1000))
 
 fit_t2_s1 <- glm(operations ~ slower + svendors + sbudget + spop,
               data = tab2s, family = poisson)
@@ -670,7 +678,7 @@ fit_t2_s3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
 fit_t2_s4 <- glm(operations ~ slower + svendors + sbudget + spop + right,
               data = tab2s, family = poisson)
 
-fit_t2_s5 <- glm(operations ~ slower + svendors + sbudget + spop + right + arrests,
+fit_t2_s5 <- glm(arrests ~ slower + sbudget + spop + right + sreports,
               data = tab2s, family = poisson)
 
 
@@ -757,8 +765,11 @@ santreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
 santreg4 <- stan_glm(operations ~ slower + svendors + sbudget + spop + right,
               data = tab2s, family = poisson, refresh = 0)
 
-santreg5 <- stan_glm(operations ~ slower + svendors + sbudget + spop + 
-                  right + arrests,
+# arrests were decimal values s.t. df$arrests[n] = n/1000, so I mutated
+# class to integer and mulitplied to get the true counts for santiago without
+# affecting the other graphics etc. that use that variable. 
+
+santreg5 <- stan_glm(arrest_T ~ slower + sbudget + spop + right + sreports,
               data = tab2s, family = poisson, refresh = 0)
 
 
@@ -846,6 +857,8 @@ loo_compare(looL1, looL3)
 
 ```
 
+
+
 ```{r loo_prev_models_santiago, cache = T, message=F}
 
 # 5 problematic observations
@@ -875,19 +888,22 @@ loo_compare(looS1, looS3)
 
 loo_compare(looS1, looS4)
 
-loo_compare(looS1, looS5)
-
 loo_compare(looS2, looS3)
 
 loo_compare(looS2, looS4)
 
-loo_compare(looS2, looS5)
+
 
 loo_compare(looS3, looS4)
 
-loo_compare(looS3, looS5)
-
-loo_compare(looS4, looS5)
+    # model 5 is a different regression w/ different dep. var
+    # loo_compare(looS1, looS5)
+    
+    # loo_compare(looS3, looS5)
+    # 
+    # loo_compare(looS4, looS5)
+    # 
+    # loo_compare(looS2, looS5)
 
 ```
 
