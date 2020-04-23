@@ -2,16 +2,18 @@
 title: "Replication: 'The Distributive Politics of Enforcement'"
 author: "Beau Meche"
 date: "2/21/2020"
-output: 
+output:
   bookdown::pdf_document2:
-    extra_dependencies: ["rotating"]
+    extra_dependencies: ["rotating", "float"]
 bibliography: "bibliography1.bib"
 #biblio-style: "chicagolike"
 link_citations: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.pos = "!H",
+                      out.height = "\\textheight",  
+                      out.width = "\\textwidth")
 
 # toolbox
 
@@ -20,12 +22,12 @@ knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
 library(foreign)
-library(stargazer)
 library(tinytex)
 library(gt)
 library(bibtex)
 library(rstanarm)
 library(ggthemes)
+library(stargazer)
 
 ```
 
@@ -126,8 +128,7 @@ The author of this paper has become relatively well known for her research and h
 
 Without digressing into Holland's research or the other supporting research again, it seems intuitive that where there is a majority of voters comprised of these individuals in the lower income distribution range who may rely, or know someone who relies, on secondary income to sustain themselves you would find that the local government would be less harsh on these cases of unregistered free markets. In fact, since this paper was published other authors have found cases where the government actually incentivizes the collaboration or unionization of these unregistered individuals as a sort of subset of the economy [@Hummel17]. 
 
-Overall this vein of inquiry has fascinating ramifications in electoral predictions and voter behavior, especially in cases where statistical analyses show decreased sensitivities to potentially exogenous enforcement factors like department budgets and other angles. Carefully constructed models slowly begin to point their fingers toward constituency as a large driver of enforcement behaviors; and while I would prefer to see a few more rigors in the process, I tend to be convinced by the findings available thus far. 
-
+Overall this vein of inquiry has fascinating ramifications in electoral predictions and voter behavior, especially in cases where statistical analyses show decreased sensitivities to potentially exogenous enforcement factors like department budgets and other angles. Carefully constructed models slowly begin to point their fingers toward constituency as a large driver of enforcement behaviors; and while I would prefer to see a few more rigors in the process, I tend to be convinced by the findings available thus far.
 
 ```{r mstone_4_gtTable, echo=FALSE}
 
@@ -385,7 +386,7 @@ tab2 <- enforce1 %>%
                                    scaleFun = sd))
 
 fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2, family = poisson(link = "log"))
+              data = tab2, family = poisson)
 
 # stargazer(fit_t2, type = "text")
 
@@ -396,33 +397,16 @@ fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
 
 ```
 
-
-
-
-
-
-```{r, message=F, warning=F, results='asis'}
-# 
-# \newpage
-# #### This is my attempted replication of one of Holland's regression tables. 
-# 
-# The regression type is a log-likelihood regression. This regression was solely for Bogotá.
-
-# stargazer(fit_t2)
-
-# ![This is the Bogota section of Holland's table 2 for reference: ]("table2_bogota_portion_replication.png")
-
-```
-
-
-
-
 \newpage
+
+
 #### "Beautiful" Graphic
 
-```{r}
 
-top_left %>% 
+
+```{r fig.align='left'}
+
+b_graph <- top_left %>% 
   ggplot(aes(y = operations, x = vendors)) + 
   geom_point(aes(shape = factor(poordistrict))) + 
   scale_y_continuous(limits = c(0, 30), 
@@ -445,6 +429,8 @@ dataverse at: https://doi.org/10.1111/ajps.12125",
   theme_hc() +
   theme(legend.position="bottom")
 
+b_graph
+
 ```
 
 
@@ -463,6 +449,7 @@ library(cowplot)
 plot_grid(TL, TR); plot_grid(BL, BR)
 
 ```
+
 ![This is Holland's Figure 3 for reference: ]("holland_figure3_appendix_pic.png")
 
 ```{r figure_4_holland_rep}
@@ -501,7 +488,7 @@ enforce1 <- enforce1 %>%
 # in the regression table)
 
 fit_f2 <- glm(operations ~ lower + vendors + budget + population,
-              data = enforce1, family = poisson(link = "log"))
+              data = enforce1, family = poisson)
 
 # the source code says to re-run the prediction code under various conditions, 
 # this is my working attempt at this with "new" data as we have done in class
@@ -603,7 +590,7 @@ tab2 <- enforce1 %>%
                                    scaleFun = sd))
 
 fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2, family = poisson(link = "log"))
+              data = tab2, family = poisson)
 
 # stargazer(fit_t2, type = "text")
 
@@ -633,14 +620,14 @@ tab2l <- enforce1 %>%
                               scaleFun = sd))
 
 fit_t2_lim1 <- glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2l, family = poisson(link = "log"))
+              data = tab2l, family = poisson)
 
 fit_t2_lim2 <- glm(operations ~ slower + svendors + sbudget + spop + smargin,
-              data = tab2l, family = poisson(link = "log"))
+              data = tab2l, family = poisson)
 
 fit_t2_lim3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
                      s.int_ML,
-              data = tab2l, family = poisson(link = "log"))
+              data = tab2l, family = poisson)
 
 # stargazer(fit_t2_lim1, fit_t2_lim2, fit_t2_lim3, type = "text")
   
@@ -671,20 +658,20 @@ tab2s <- enforce1 %>%
                               scaleFun = sd))
 
 fit_t2_s1 <- glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2s, family = poisson(link = "log"))
+              data = tab2s, family = poisson)
 
 fit_t2_s2 <- glm(operations ~ slower + svendors + sbudget + spop + smargin,
-              data = tab2s, family = poisson(link = "log"))
+              data = tab2s, family = poisson)
 
 fit_t2_s3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
                      s.int_ML,
-              data = tab2s, family = poisson(link = "log"))
+              data = tab2s, family = poisson)
 
 fit_t2_s4 <- glm(operations ~ slower + svendors + sbudget + spop + right,
-              data = tab2s, family = poisson(link = "log"))
+              data = tab2s, family = poisson)
 
 fit_t2_s5 <- glm(operations ~ slower + svendors + sbudget + spop + right + arrests,
-              data = tab2s, family = poisson(link = "log"))
+              data = tab2s, family = poisson)
 
 
 stargazer(fit_t2,
@@ -699,6 +686,7 @@ stargazer(fit_t2,
           column.separate = c(1, 3, 5))
 
 ```
+
 \newpage
 #### Extension: pt.1
 
@@ -735,7 +723,6 @@ enforce1 %>%
 
 ```
 
-
 ```{r extension_model_types}
 
 # this will be a regression table like the previous one, only calculated with 
@@ -743,39 +730,38 @@ enforce1 %>%
 # the median values of the prediction distribution of the 1000 iterations
 # implicit to Bayesian methods and to stan_glm specifically. 
 
-# Bogota regression: 
+# Bogota regression: check out 'stan_glmer'
 bogreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2, family = poisson, refresh = 0)
+              data = tab2, family = poisson,refresh = 0)
 
 limreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2l, family = poisson(link = "log"), refresh = 0)
+              data = tab2l, family = poisson, refresh = 0)
 
 limreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
-              data = tab2l, family = poisson(link = "log"), refresh = 0)
+              data = tab2l, family = poisson, refresh = 0)
 
 limreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
                      s.int_ML, 
-                    data = tab2l, family = poisson(link = "log"), refresh = 0)
+                    data = tab2l, family = poisson, refresh = 0)
 
 santreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2s, family = poisson(link = "log"), refresh = 0)
+              data = tab2s, family = poisson, refresh = 0)
 
 santreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
-              data = tab2s, family = poisson(link = "log"), refresh = 0)
+              data = tab2s, family = poisson, refresh = 0)
 
 santreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
                      s.int_ML,
-              data = tab2s, family = poisson(link = "log"), refresh = 0)
+              data = tab2s, family = poisson, refresh = 0)
 
 santreg4 <- stan_glm(operations ~ slower + svendors + sbudget + spop + right,
-              data = tab2s, family = poisson(link = "log"), refresh = 0)
+              data = tab2s, family = poisson, refresh = 0)
 
 santreg5 <- stan_glm(operations ~ slower + svendors + sbudget + spop + 
                   right + arrests,
-              data = tab2s, family = poisson(link = "log"), refresh = 0)
+              data = tab2s, family = poisson, refresh = 0)
 
 
-# # stargazer(santreg1)
 # 
 #           # ,
 #           # limreg1, limreg2, limreg3,
@@ -798,7 +784,6 @@ santreg5 <- stan_glm(operations ~ slower + svendors + sbudget + spop +
 
 ```
 
-
 #### Extension: pt.2
 
 (a) The object of this portion is to compare modeling methods between standard poisson regressions and those done in the Bayesian method. Errors, estimate measures, and fit metrics are slightly different, so we will see whether this methodological change brings up points of concern
@@ -806,9 +791,10 @@ santreg5 <- stan_glm(operations ~ slower + svendors + sbudget + spop +
 ###### Bogota: Bayesian regression
 ```{r bogreg1}
 
-print(bogreg1)
+print(bogreg1, digits = 3)
 
 ```
+
 
 ###### Lima: Bayesian Regressions
 (1)
@@ -817,6 +803,7 @@ print(bogreg1)
 print(limreg1, digits = 3)
 
 ```
+
 
 (2)
 ```{r limreg2}
@@ -832,11 +819,10 @@ print(limreg3, digits = 3)
 
 ```
 
-
 (b) This section contains leave-one-out cross-validation model comparisons between the Bayesian models from part 'a' for cities with multiple regressions in the original analysis. 
 
  
-```{r loo_previous_models_lima, message=F}
+```{r loo_previous_models_lima, cache = T, message=F}
 
 # this model had 3 problematic observations
 
@@ -860,7 +846,7 @@ loo_compare(looL1, looL3)
 
 ```
 
-```{r loo_prev_models_santiago, message=F}
+```{r loo_prev_models_santiago, cache = T, message=F}
 
 # 5 problematic observations
 
@@ -878,7 +864,8 @@ looS3 <- loo(santreg3, k_threshold = 0.7)
 
 looS4 <- loo(santreg4, k_threshold = 0.7)
 
-# 
+# USE THIS VVV
+# pp_check(santreg4, "dens_overlay")
 
 looS5 <- loo(santreg5, k_threshold = 0.7)
 
@@ -902,31 +889,7 @@ loo_compare(looS3, looS5)
 
 loo_compare(looS4, looS5)
 
-
-
 ```
-
-
-```{r rendering, eval=F}
-
-# these are supposed to publish a bookdown doc, but they are largely useless and create the error: 
-# 
-# Error in bookdown::render_book(input = "Meche_enforcement_variance.Rmd") : 
-#   The file _main.Rmd exists. Please delete it if it was automatically generated, or set a different book_filename option in _bookdown.yml. If you are sure it can be safely deleted, please set the option 'delete_merged_file' to true in _bookdown.yml.
-
-# bookdown::render_book(input = "Meche_enforcement_variance.Rmd")
-# 
-# bookdown::publish_book()
-
-```
-
-
-
-
-
-
-
-
 
 
 
