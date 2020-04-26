@@ -4,7 +4,7 @@ author: "Beau Meche"
 date: "2/21/2020"
 output:
   bookdown::pdf_document2:
-    extra_dependencies: ["rotating", "float"]
+    extra_dependencies: ["rotating"]
 bibliography: "bibliography1.bib"
 #biblio-style: "chicagolike"
 link_citations: true
@@ -28,6 +28,8 @@ library(bibtex)
 library(rstanarm)
 library(ggthemes)
 library(stargazer)
+library(huxtable)
+
 
 ```
 
@@ -793,42 +795,56 @@ santreg5 <- stan_glm(arrest_T ~ slower + sbudget + spop + right + sreports,
 # # summary(z, digits = 4)
 # # summary(q, digits = 4)
 
+
 ```
 
+\newpage
 #### Extension: pt.2
 
 (a) The object of this portion is to compare modeling methods between standard poisson regressions and those done in the Bayesian method. Errors, estimate measures, and fit metrics are slightly different, so we will see whether this methodological change brings up points of concern
 
-###### Bogota: Bayesian regression
-```{r bogreg1}
 
-print(bogreg1, digits = 3)
+(1) Bogota and Lima:
+
+```{r bog_lim_table}
+
+h_tab1 <- huxreg("(Bog.1)" = bogreg1, 
+                 "(Lima 1)" = limreg1,
+                 "(Lima 2)" = limreg2,
+                 "(Lima 3)" = limreg3,
+                 error_format = "({std.error})",
+                 align = ".",
+                 stars = NULL,
+                 statistics = "nobs")
+
+h_tab1
+
+```
+
+
+(2) Santiago:
+
+```{r santiago_h_table}
+
+h_tab2 <- huxreg("(San. 1)" = santreg1,
+                 "(San. 2)" = santreg2,
+                 "(San. 3)" = santreg3,
+                 "(San. 4)" = santreg4,
+                 "(San. 5)" = santreg5,
+                 error_format = "({std.error})",
+                 align = ".",
+                 stars = NULL,
+                 statistics = "nobs")
+
+h_tab2
 
 ```
 
 
-###### Lima: Bayesian Regressions
-(1)
-```{r limreg1}
-
-print(limreg1, digits = 3)
-
-```
 
 
-(2)
-```{r limreg2}
 
-print(limreg2, digits = 3)
-
-```
-
-(3)
-```{r limmreg3}
-
-print(limreg3, digits = 3)
-
-```
+\newpage
 
 (b) This section contains leave-one-out cross-validation model comparisons between the Bayesian models from part 'a' for cities with multiple regressions in the original analysis. 
 
