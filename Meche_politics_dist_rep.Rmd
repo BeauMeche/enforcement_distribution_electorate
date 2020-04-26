@@ -808,14 +808,22 @@ santreg5 <- stan_glm(arrest_T ~ slower + sbudget + spop + right + sreports,
 
 ```{r bog_lim_table}
 
-h_tab1 <- huxreg("(Bog.1)" = bogreg1, 
-                 "(Lima 1)" = limreg1,
-                 "(Lima 2)" = limreg2,
-                 "(Lima 3)" = limreg3,
+h_tab1 <- huxreg("(B 1)" = bogreg1, 
+                 "(L 1)" = limreg1,
+                 "(L 2)" = limreg2,
+                 "(L 3)" = limreg3,
                  error_format = "({std.error})",
                  align = ".",
                  stars = NULL,
-                 statistics = "nobs")
+                 statistics = c('Num. Observations' = 'nobs'),
+                 coefs = c("Intercept" = "(Intercept)",
+                           "Lower" = "slower",
+                           "Vendors" = "svendors",
+                           "Budget" = "sbudget",
+                           "Population" = "spop",
+                           "Margin" = "smargin",
+                           "Margin*Lower" = "s.int_ML")) %>% 
+  set_caption("Bogota and Lima")
 
 h_tab1
 
@@ -826,15 +834,23 @@ h_tab1
 
 ```{r santiago_h_table}
 
-h_tab2 <- huxreg("(San. 1)" = santreg1,
-                 "(San. 2)" = santreg2,
-                 "(San. 3)" = santreg3,
-                 "(San. 4)" = santreg4,
-                 "(San. 5)" = santreg5,
+h_tab2 <- huxreg("(1)" = santreg1,
+                 "(2)" = santreg2,
+                 "(3)" = santreg3,
+                 "(4)" = santreg4,
+                 "(5)" = santreg5,
                  error_format = "({std.error})",
                  align = ".",
                  stars = NULL,
-                 statistics = "nobs")
+                 statistics = c('Num. Observations' = 'nobs'),
+                 coefs = c("Intercept" = "(Intercept)",
+                           "Lower" = "slower",
+                           "Vendors" = "svendors",
+                           "Budget" = "sbudget",
+                           "Population" = "spop",
+                           "Margin" = "smargin",
+                           "Margin*Lower" = "s.int_ML")) %>% 
+  set_caption("Santiago")
 
 h_tab2
 
