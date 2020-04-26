@@ -33,11 +33,6 @@ library(huxtable)
 
 ```
 
-#### Credit:
-The Distributive Politics of Enforcement
-
-
-Author: Alisha C. Holland
 
 
 #### Introduction and Overview: 
@@ -47,12 +42,8 @@ This paper looks at police behavior in varying contexts around Latin America to 
 The author argues that in many cases, not enforcing these laws is as intentional as enforcing them and makes the early assertion of one of her findings where she found a five times higher enforcement rate in places where constituents were primarily non-poor (a binary distinction make in the data analysis portion of the research). Holland uses many standardized poisson regression models, which makes sense in the setting where response variables are the topic of interest. The catch in that model is the concern for invalidation by reverse causality. To counter this point, a supply vs. demand framework is raised as one might find in your favorite introductory economics course with the y-axis showing enforcement frequency and the x-axis showing offenses. The key to this argument is in assuming that the intentional non-enforcement cases would translate to an outward shift in the ‘supply curve’ of enforcement. This framework gives a decent basis to analyze electoral and otherwise political behavior and regional differences. The results of the data and the proposed model seem to support this framework and initial intuition, even if it is specific to the case observed. I would have concerns about the external validity of Holland’s model, but nonetheless I agree that the model results in support for the framework claiming that there is an inverse relationship between police enforcement of vending licensing and quantity of poor individuals voting in a district. 
 
 
-#### <u>A Quote from the Abstract:</u>
 
-"Why do some politicians tolerate the violation of the law? In contexts where the poor are the primary violators of property laws, I argue that the answer lies in the electoral costs of enforcement: Enforcement can decrease support from poor voters even while it generates support among nonpoor voters. Using an original data set on unlicensed street vending and enforcement operations at the subcity district level in three Latin American capital cities, I show that the combination of voter demographics and electoral rules explains enforcement. Supported by qualitative interviews, these findings suggest how the intentional nonenforcement of law, or forbearance, can be an electoral strategy. Dominant theories based on state capacity poorly explain the results."^[[“All analysis and output code for this replication project as well as the original paper are available here. ](https://github.com/BeauMeche/enforcement_distribution_electorate)]
 
--Alisha C. Holland
-[@Holland14]
 
 ```{r load_and_triage_data}
 
@@ -109,21 +100,6 @@ enforce1 <- read_tsv("Enforcement.tab",
 
 \newpage
 
-#### Proposed Extension and Addition to Human knowledge: 
-
-Extending this academic work presents a particular challenge. The core of this research hinges on original data collected by the author through interviews and collection of data on site in Colombia, Chile, and Peru – places I have never been to nor have the means to go to now. In addition to this, there is at this point data missing from my possession that is temporal in nature. My ideal extension of this work relies on this temporal data.
-
-As this paper was published in 2015, I would like to do an analysis of those same cities with data from the last five years. After making sure that the political and electoral systems are acceptably similar to the conditions which were posited in Holland’s work, it would be great to be able to test her methods as predictive models and observe their accuracy. This opens up a discussion regardless of the congruence, as high similarity supports her arguments and her modeling work and significant differences pose any number of questions about what has changed in the political sphere in the differential city. 
-
-That said, and pending the not-insignificant chance that this data continues to be unavailable, I would like to further explore the concerns of reverse causality in this paper, either through instrumental variable regression or through the causal methods that we will cover in the near future in 1006. I was fascinated by the work and the logic in Holland’s paper, but there were several points of concern that I think warrant more testing and exploration to see whether these assumptions hold or whether they are conjecture that would lead to significant differences between the model’s predictions as mentioned above and reality now or in the future. In addition to this, and in the Bayesian spirit of data analysis, I think it would be interesting to look at the current data where decentralized is a binary variable and use this to look at whether this would be an informative practice in supporting Holland’s original work. 
-
-As a third alternative, I am relatively familiar with OECD and health-related data sourcing. Holland showed in some ways how demographic variables were not necessarily informative to the topic of the study, but health and wellness data could be informative; especially in a setting where budget and poverty are core drivers and points of information. I do have the intuition at this point that I would still be relying on access to the temporal dataset used in the paper that is not included in the dataverse. 
-
-Updated: My extension to this will focus on the role of missing data imputation and the underlying logic. 
-
-
-\newpage
-
 #### Literature Review
 
 The author of this paper has become relatively well known for her research and her findings in the realm of forbearance and electoral impacts relative to low income populations in Latin America. In the literature published after this particular paper in 2014, a majority of it has also been authored by Holland and so far as I can tell there are few contradictions to be seen. The setting of the cases observed in this research is one where vendors of various goods are 'guilty' of using public space to peddle their private enterprises. This gives the police forces the ability to, within the letter of the law, arrest or otherwise enforce the statute that they are unlicensed to the space in question and that they should vacate. The reality tangent to this is that these vendors are also voters, and they are unlikely to forget the political head of the forces inhibiting their livelihood. Holland cites Colombia's National Data Archive with respect to the aspect that these vendors often do tend to rely on thier 'unlicensed incomes' as they are usually quite low-ranking in the income distribution.
@@ -131,6 +107,20 @@ The author of this paper has become relatively well known for her research and h
 Without digressing into Holland's research or the other supporting research again, it seems intuitive that where there is a majority of voters comprised of these individuals in the lower income distribution range who may rely, or know someone who relies, on secondary income to sustain themselves you would find that the local government would be less harsh on these cases of unregistered free markets. In fact, since this paper was published other authors have found cases where the government actually incentivizes the collaboration or unionization of these unregistered individuals as a sort of subset of the economy [@Hummel17]. 
 
 Overall this vein of inquiry has fascinating ramifications in electoral predictions and voter behavior, especially in cases where statistical analyses show decreased sensitivities to potentially exogenous enforcement factors like department budgets and other angles. Carefully constructed models slowly begin to point their fingers toward constituency as a large driver of enforcement behaviors; and while I would prefer to see a few more rigors in the process, I tend to be convinced by the findings available thus far.
+
+
+\newpage
+#### Extension: 
+
+In effort to further explore the findings from Holland’s work, the same poisson models that comprise ‘Table 2’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
+
+The first exploration was with respect to missing data. In short, there was no place for concern for missing data. Whether this is due to the pre-cleaned data being the only repository made available, the nature of the original research lending a low rate of missing values, or other factors is unknown. It was found to be the case that there were complete records funneled into all models constructed in the original study, and the only ‘missing’ values were variables completely present or missing at the city level. 
+The second exploration was with regard to the Bayesian regression coefficients and whether they were notably different from the originals. INSERT A CONCLUSION ABOUT THIS HERE
+
+The third inquiry was a test of the fit of the models. Using the leave-one-out cross validation method of analyzing the Bayesian regressions, there were between 3 and 7 observations per model in the regressions for Lima and Santiago that were deemed to be ‘problematic’ by this analysis. In small data sets with any level of variance, it seems reasonable at first to assume that there would be a few outlying values that would not be great fits to the model at hand. However, in this case the gross number of observations available to the models are 34 or 36. This implies that if the model ignores or removes the extraneous observations (which is the case in the Bayesian methods employed [cite rstanarm here]) we range farther into territory in which the minimum value to employ the central limit theorem and various other underlying statistical assumptions. 
+
+The final inquiry was with regard to ‘statistical significance’ and its equivalent in Bayesian inference through rstanarm[cite again]. [summarize here the comparison of the 90% credible interval to the 95% CI, as well as which values are stat. sig. compared to which cred intervals are strong.
+
 
 ```{r mstone_4_gtTable, echo=FALSE}
 
