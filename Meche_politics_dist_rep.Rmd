@@ -115,6 +115,7 @@ Overall this vein of inquiry has fascinating ramifications in electoral predicti
 In effort to further explore the findings from Holland’s work, the same poisson models that comprise ‘Table 2’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
 
 The first exploration was with respect to missing data. In short, there was no place for concern for missing data. Whether this is due to the pre-cleaned data being the only repository made available, the nature of the original research lending a low rate of missing values, or other factors is unknown. It was found to be the case that there were complete records funneled into all models constructed in the original study, and the only ‘missing’ values were variables completely present or missing at the city level. 
+
 The second exploration was with regard to the Bayesian regression coefficients and whether they were notably different from the originals. INSERT A CONCLUSION ABOUT THIS HERE
 
 The third inquiry was a test of the fit of the models. Using the leave-one-out cross validation method of analyzing the Bayesian regressions, there were between 3 and 7 observations per model in the regressions for Lima and Santiago that were deemed to be ‘problematic’ by this analysis. In small data sets with any level of variance, it seems reasonable at first to assume that there would be a few outlying values that would not be great fits to the model at hand. However, in this case the gross number of observations available to the models are 34 or 36. This implies that if the model ignores or removes the extraneous observations (which is the case in the Bayesian methods employed [cite rstanarm here]) we range farther into territory in which the minimum value to employ the central limit theorem and various other underlying statistical assumptions. 
@@ -877,6 +878,8 @@ loo_compare(looL2, looL3)
 
 loo_compare(looL1, looL3)
 
+# check density overlay for model 3
+
 ```
 
 
@@ -914,8 +917,6 @@ loo_compare(looS2, looS3)
 
 loo_compare(looS2, looS4)
 
-
-
 loo_compare(looS3, looS4)
 
     # model 5 is a different regression w/ different dep. var
@@ -928,6 +929,120 @@ loo_compare(looS3, looS4)
     # loo_compare(looS2, looS5)
 
 ```
+
+```{r model_fit_comparisons, echo = T}
+
+# time allowing: make a loop to average the median values for all observations
+
+# Bogota: 
+
+  print(coef(fit_t2), digits = 3)
+  
+  pred_b1 <- posterior_linpred(bogreg1)
+  summary(pred_b1[1,])
+
+
+# Lima 1
+
+  print(coef(fit_t2_lim1), digits = 3)
+  
+  pred_l1 <- posterior_linpred(limreg1)
+  summary(pred_l1[1,])
+  
+# Lima 2
+
+  print(coef(fit_t2_lim2), digits = 3)
+  
+  pred_l2 <- posterior_linpred(limreg2)
+  summary(pred_l2[1,])
+  
+# Lima 3
+  
+  print(coef(fit_t2_lim3), digits = 3)
+  
+  pred_l3 <- posterior_linpred(limreg3)
+  summary(pred_l3[1,])
+  
+  
+# Santiago 1
+  
+  print(coef(fit_t2_s1), digits = 3)
+  
+  pred_s1 <- posterior_linpred(santreg1)
+  summary(pred_s1[1,])
+  
+# Santiago 2
+  
+  print(coef(fit_t2_s2), digits = 3)
+  
+  pred_s2 <- posterior_linpred(santreg1)
+  summary(pred_s2[1,])
+  
+# Santiago 3
+  
+  print(coef(fit_t2_s3), digits = 3)
+  
+  pred_s3 <- posterior_linpred(santreg1)
+  summary(pred_s3[1,])
+  
+# Santiago 4
+  
+  print(coef(fit_t2_s4), digits = 3)
+  
+  pred_s4 <- posterior_linpred(santreg1)
+  summary(pred_s4[1,])
+  
+# Santiago 5
+  
+  print(coef(fit_t2_s5), digits = 3)
+  
+  pred_s5 <- posterior_linpred(santreg1)
+  summary(pred_s5[1,])
+
+```
+\newpage
+#### Model checks done on preferred competing models. <br\>
+
+
+
+###### Bogota: Regression 1
+```{r pp_check_Bog, cache=T}
+
+# Bogota
+
+pp_check(bogreg1, plotfun = "dens_overlay")
+
+```
+\newpage
+###### Lima: Regression 3
+
+```{r pp_check_Lim, cache=T}
+
+pp_check(limreg3, plotfun = "dens_overlay")
+
+```
+
+
+\newpage
+###### Santiago: Regression 4
+
+```{r pp_check_S4, cache=T}
+
+pp_check(santreg4, plotfun = "dens_overlay")
+
+```
+
+\newpage
+###### Santiago: Regression 5
+######## Regression 5 is a separate model construction and thus was not compared to models 1-4. 
+
+```{r pp_check_S5, cache=T}
+
+pp_check(santreg5, plotfun = "dens_overlay")
+
+```
+
+
 
 
 
