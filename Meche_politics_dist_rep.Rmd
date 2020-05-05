@@ -395,14 +395,15 @@ fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
 
 ```
 
-\newpage
+
+
+
+```{r fig.align='left', eval=F, echo=F}
+
+# \newpage
 
 
 #### "Beautiful" Graphic
-
-
-
-```{r fig.align='left'}
 
 b_graph <- top_left %>% 
   ggplot(aes(y = operations, x = vendors)) + 

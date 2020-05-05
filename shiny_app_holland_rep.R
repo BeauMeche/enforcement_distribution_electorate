@@ -14,6 +14,7 @@ ui <- navbarPage("Replication: The Distributive Politics of Enforcement",
                 )
 
 
+
 server <- function(input, output) {
   
   output$acknowledgements <- renderText({
