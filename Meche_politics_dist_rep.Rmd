@@ -41,9 +41,9 @@ library(huxtable)
 
 #### Introduction and Overview: 
 
-This paper[@Holland14] looks at police behavior in varying contexts around Latin America to explore what gets prosecuted and what is allowed to go unnoticed. The areas of interest are the relationships between constituency of the powers that be (at a given time) and how much those individuals in the constituent groups care to have property rights enforced. Involving a great deal of original research, the author does an intriguing job of addressing this question in a rather Bayesian way, so I thought this would be a good project on a topic that I briefly studied previously and can now apply new skills to. 
+This paper[@Holland14] looks at police behavior in varying contexts around Latin America to explore what gets prosecuted and what is allowed to go unnoticed. The areas of interest are the relationships between constituency of the powers that be (at a given time) [fig. 1] and how much those individuals in the constituent groups care to have property rights enforced. Involving a great deal of original research, the author does an intriguing job of addressing this question in a way that I think could be complemented by additional Bayesian analysis, so I thought this would be a good project on a topic that I briefly studied previously and can now apply new skills to. 
 
-The author argues that in many cases, not enforcing these laws is as intentional as enforcing them and makes the early assertion of one of her findings where she found a five times higher enforcement rate in places where constituents were primarily non-poor (a binary distinction make in the data analysis portion of the research). Holland uses many standardized poisson regression models, which makes sense in the setting where response variables are the topic of interest. The catch in that model is the concern for invalidation by reverse causality. To counter this point, a supply vs. demand framework is raised as one might find in your favorite introductory economics course with the y-axis showing enforcement frequency and the x-axis showing offenses. The key to this argument is in assuming that the intentional non-enforcement cases would translate to an outward shift in the ‘supply curve’ of enforcement. This framework gives a decent basis to analyze electoral and otherwise political behavior and regional differences. The results of the data and the proposed model seem to support this framework and initial intuition, even if it is specific to the case observed. I would have concerns about the external validity of Holland’s model, but nonetheless I agree that the model results in support for the framework claiming that there is an inverse relationship between police enforcement of vending licensing and quantity of poor individuals voting in a district. 
+The author argues that in many cases, not enforcing these laws is as intentional as enforcing them and makes an early assertion of one of her findings where she found up to a five times higher enforcement rate in places where constituents were primarily non-poor (a binary distinction make in the data analysis portion of the research) [fig.1]. Holland uses many standardized poisson regression models [fig. 2], which makes sense in the setting where response variables are the topic of interest. The catch in that model is the concern for invalidation by reverse causality. To counter this point, a supply vs. demand framework is raised as one might find in your favorite introductory economics course with the y-axis showing enforcement frequency and the x-axis showing the count of offenses. The key to this argument is in assuming that the intentional non-enforcement cases would translate to an outward shift in the ‘supply curve’ of enforcement. This framework gives a solid basis to analyze electoral and otherwise political behavior and regional differences. The results of the data and the proposed model seem to support this framework and initial intuition, even if it is specific to the case observed. Becuase of the specificity in political frameworks inquestion here, I would have concerns about the external validity of Holland’s models, but nonetheless I agree that the model results in support for the framework claiming that there is an inverse relationship between police enforcement of vending licensing and quantity of poor individuals voting in a district. 
 
 
 
@@ -437,7 +437,9 @@ b_graph
 
 #### Appendix: 
 
-I was unable to recreate one graphic on account of not having access to political and temporal data that would allow me to create the graphic showing class gradient, budget, operations, and politicians in power for certain time frames. Otherwise, I have replicated or attempted to replicate all of the major analyses in the paper with the data I have access to. Items made by the author with data unaccessible and graphs pertaining to only theory were not replicated on basis of not being relevant to course scope. 
+
+
+* Figure 1. 
 
 
 
@@ -449,9 +451,12 @@ plot_grid(TL, TR); plot_grid(BL, BR)
 
 ```
 
-![This is Holland's Figure 3 for reference: ]("holland_figure3_appendix_pic.png")
 
 ```{r figure_4_holland_rep}
+
+# don't think I need the original for comparison any longer
+
+# ![This is Holland's Figure 3 for reference: ]("holland_figure3_appendix_pic.png")
 
 # this is all code in attempt to replicate the methods, which I understand, 
 # used in the replication done in stata. 
@@ -634,6 +639,9 @@ fit_t2_lim3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
 ```
 
 
+* Figure 2
+
+
 ```{r santiago_regressions, warning=F, message=F, results='asis'}
 
 # tab2_santiago
@@ -684,13 +692,14 @@ fit_t2_s5 <- glm(arrests ~ slower + sbudget + spop + right + sreports,
 stargazer(fit_t2,
           fit_t2_lim1, fit_t2_lim2, fit_t2_lim3,
           fit_t2_s1, fit_t2_s2, fit_t2_s3, fit_t2_s4, fit_t2_s5,
-          title = "Santiago",
+          title = "Replicated Models",
           covariate.labels=c("Lower", "Vendors", "Budget", "Population", "Margin",
                              "Margin*Lower", "Right", "Reports"),
           float.env = "sidewaystable", 
           no.space = TRUE,
           column.labels = c("Bogota", "Lima", "Santiago"),
-          column.separate = c(1, 3, 5))
+          column.separate = c(1, 3, 5),
+          header = F)
 
 ```
 
@@ -820,7 +829,8 @@ h_tab1 <- huxreg("(B 1)" = bogreg1,
                            "Population" = "spop",
                            "Margin" = "smargin",
                            "Margin*Lower" = "s.int_ML")) %>% 
-  set_caption("Bogota and Lima")
+  set_caption("Bogota and Lima") %>% 
+  add_footnote("B1, L1-3 indicate regression country / model number from the replicated regression model table")
 
 h_tab1
 
