@@ -118,7 +118,7 @@ Overall this vein of inquiry has fascinating ramifications in electoral predicti
 
 #### Extension: 
 
-In effort to further explore^[[“All analysis and output code for this replication project as well as the original paper are available here.](https://github.com/BeauMeche/enforcement_distribution_electorate)] the findings from Holland’s work, the same poisson models that comprise ‘Table 2’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
+In effort to further explore^[[“All analysis and output code for this replication project as well as the original paper are available here.](https://github.com/BeauMeche/enforcement_distribution_electorate)] the findings from Holland’s work, the same poisson models that comprise ‘Figure 1’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
 
 The first exploration was with respect to missing data. In short, there was no place for concern for missing data. Whether this is due to the pre-cleaned data being the only repository made available, the nature of the original research lending a low rate of missing values, or other factors is unknown. It was found to be the case that there were complete records funneled into all models constructed in the original study, and the only ‘missing’ values were variables completely present or missing at the city level. 
 
@@ -398,7 +398,7 @@ fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
 
 
 
-```{r fig.align='left', eval=F, echo=F}
+```{r beautiful_graph_redundancy, fig.align='left', eval=F, echo=F}
 
 # \newpage
 
@@ -704,7 +704,8 @@ stargazer(fit_t2,
 ```
 
 \newpage
-#### Extension: pt.1
+
+* Figure 3 
 
 With regard to missing data analysis, there were no points of concern as there were no regression analyses that incorporated missing data. below you can see the summary of data missing from the onset, but at the level of analyses, the individual cities, there were no calculations done on variables with incomplete sets of information. 
 
@@ -872,7 +873,7 @@ h_tab2
 (b) This section contains leave-one-out cross-validation model comparisons between the Bayesian models from part 'a' for cities with multiple regressions in the original analysis. 
 
  
-```{r loo_previous_models_lima, cache = T, message=F}
+```{r loo_previous_models_lima, cache = T, message=F, fig.align='left'}
 
 # this model had 3 problematic observations
 
@@ -888,7 +889,20 @@ looL3 <- loo(limreg3, k_threshold = 0.7)
 
 # the third regression seems to be the best fit for Lima
 
-loo_compare(looL1, looL2)
+zzz <- loo_compare(looL1, looL2)
+
+stargazer(zzz, type = "text")
+
+```
+
+
+```{r, fig.align='left'}
+
+hux(zzz, add_colnames = T)
+
+```
+
+```{r}
 
 loo_compare(looL2, looL3)
 
@@ -897,6 +911,13 @@ loo_compare(looL1, looL3)
 # check density overlay for model 3
 
 ```
+
+```{r}
+
+stargazer(zzz, type = "text")
+
+```
+
 
 
 
