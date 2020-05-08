@@ -2,12 +2,15 @@
 title: "Replication: 'The Distributive Politics of Enforcement'"
 author: "Beau Meche"
 date: "2/21/2020"
+header-includes:
+    - \usepackage{setspace}\doublespacing
 output:
   bookdown::pdf_document2:
     extra_dependencies: ["rotating"]
 bibliography: "bibliography1.bib"
 #biblio-style: "chicagolike"
 link_citations: true
+toc: false
 ---
 
 ```{r setup, include=FALSE}
@@ -33,13 +36,13 @@ library(huxtable)
 
 ```
 
-#### Abstract: 
+# Abstract: 
 
 "The Distributive Politics of Enforcement" by Alisha Holland (2014) analyzes electoral behavior's relationship with police action in opposition to low-income unlicensed street vendors in three cities in Latin America. I was mostly successful in replicating the results, with minute variance due to apparent differences between regression output between R and Stata. In my extenstion I re-regressed the models from the original paper under Bayesian modeling methods in the interest of discovering any differences likely to arise. The regression outputs themselves were quite similar and model comparisons favored similar models to the author; however upon cross-validation model analysis I found that a majority of the models were laden with 'problematic' values. This implies that the models showing statistically significant support for the author's claim do not effectively model the original dataset should any one value be removed and further implies that caution should be taken with associated claims pending better modeling or more data.
 
 
 
-#### Introduction and Overview: 
+# Introduction and Overview: 
 
 This paper[@Holland14] looks at police behavior in varying contexts around Latin America to explore what gets prosecuted and what is allowed to go unnoticed. The areas of interest are the relationships between constituency of the powers that be (at a given time) [fig. 1] and how much those individuals in the constituent groups care to have property rights enforced. Involving a great deal of original research, the author does an intriguing job of addressing this question in a way that I think could be complemented by additional Bayesian analysis, so I thought this would be a good project on a topic that I briefly studied previously and can now apply new skills to. 
 
@@ -105,7 +108,7 @@ enforce1 <- read_tsv("Enforcement.tab",
 
 
 
-#### Literature Review
+# Literature Review:
 
 The author of this paper has become relatively well known for her research and her findings in the realm of forbearance and electoral impacts relative to low income populations in Latin America. In the literature published after this particular paper in 2014, a majority of it has also been authored by Holland and so far as I can tell there are few contradictions to be seen. The setting of the cases observed in this research is one where vendors of various goods are 'guilty' of using public space to peddle their private enterprises. This gives the police forces the ability to, within the letter of the law, arrest or otherwise enforce the statute that they are unlicensed to the space in question and that they should vacate. The reality tangent to this is that these vendors are also voters, and they are unlikely to forget the political head of the forces inhibiting their livelihood. Holland cites Colombia's National Data Archive with respect to the aspect that these vendors often do tend to rely on thier 'unlicensed incomes' as they are usually quite low-ranking in the income distribution.
 
@@ -116,7 +119,7 @@ Overall this vein of inquiry has fascinating ramifications in electoral predicti
 
 
 
-#### Extension: 
+# Extension: 
 
 In effort to further explore^[[“All analysis and output code for this replication project as well as the original paper are available here.](https://github.com/BeauMeche/enforcement_distribution_electorate)] the findings from Holland’s work, the same poisson models that comprise ‘Figure 1’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
 
@@ -435,7 +438,7 @@ b_graph
 
 \newpage
 
-#### Appendix: 
+# Appendix: 
 
 
 
@@ -806,12 +809,12 @@ santreg5 <- stan_glm(arrest_T ~ slower + sbudget + spop + right + sreports,
 ```
 
 \newpage
-#### Extension: pt.2
+# Extension: pt.2
 
 (a) The object of this portion is to compare modeling methods between standard poisson regressions and those done in the Bayesian method. Errors, estimate measures, and fit metrics are slightly different, so we will see whether this methodological change brings up points of concern
 
 
-(1) Bogota and Lima:
+(1) Figure 4: Bogota and Lima:
 
 ```{r bog_lim_table}
 
@@ -838,7 +841,7 @@ h_tab1
 ```
 
 
-(2) Santiago:
+(2) Figure 5: Santiago:
 
 ```{r santiago_h_table}
 
@@ -870,8 +873,10 @@ h_tab2
 
 \newpage
 
-(b) This section contains leave-one-out cross-validation model comparisons between the Bayesian models from part 'a' for cities with multiple regressions in the original analysis. 
+(b) This section contains leave-one-out cross-validation model comparisons between the Bayesian models from part 'a' for cities with multiple regressions in the original analysis. As you can see, the relative-best models in the LOO-compared models are the models for which I provide density overlay plots below in part 'c'.
 
+
+## LOO-Comparisons: Lima, Peru
  
 ```{r loo_previous_models_lima, cache = T, message=F, fig.align='left'}
 
@@ -889,34 +894,18 @@ looL3 <- loo(limreg3, k_threshold = 0.7)
 
 # the third regression seems to be the best fit for Lima
 
-zzz <- loo_compare(looL1, looL2)
+lcL_1.2 <- loo_compare(looL1, looL2)
 
-stargazer(zzz, type = "text")
+stargazer(lcL_1.2, type = "text")
 
-```
+stargazer(loo_compare(looL2, looL3), type = "text")
 
+stargazer(loo_compare(looL1, looL3), type = "text")
 
-```{r, fig.align='left'}
-
-hux(zzz, add_colnames = T)
-
-```
-
-```{r}
-
-loo_compare(looL2, looL3)
-
-loo_compare(looL1, looL3)
-
-# check density overlay for model 3
+# pp_check density overlay for model 3
 
 ```
 
-```{r}
-
-stargazer(zzz, type = "text")
-
-```
 
 
 
@@ -931,45 +920,68 @@ looS1 <- loo(santreg1, k_threshold = 0.7)
 
 looS2 <- loo(santreg2, k_threshold = 0.7)
 
-# 7 problems
+# 7 problems...
 
 looS3 <- loo(santreg3, k_threshold = 0.7)
 
-# 7 problems
+# 7 problems...
 
 looS4 <- loo(santreg4, k_threshold = 0.7)
 
-# USE THIS VVV
+# USE THIS LATER
 # pp_check(santreg4, "dens_overlay")
 
 looS5 <- loo(santreg5, k_threshold = 0.7)
 
-loo_compare(looS1, looS2)
+```
 
-loo_compare(looS1, looS3)
+## LOO-Comparisons: Santiago, Chile
 
-loo_compare(looS1, looS4)
+```{r, echo=F}
 
-loo_compare(looS2, looS3)
-
-loo_compare(looS2, looS4)
-
-loo_compare(looS3, looS4)
-
-    # model 5 is a different regression w/ different dep. var
-    # loo_compare(looS1, looS5)
-    
-    # loo_compare(looS3, looS5)
-    # 
-    # loo_compare(looS4, looS5)
-    # 
-    # loo_compare(looS2, looS5)
+stargazer(loo_compare(looS1, looS2), type = "text")
 
 ```
 
-```{r model_fit_comparisons, echo = T}
+```{r, echo=F}
 
-# time allowing: make a loop to average the median values for all observations
+stargazer(loo_compare(looS1, looS3), type = "text")
+
+```
+
+```{r, echo=F}
+
+stargazer(loo_compare(looS1, looS4), type = "text")
+
+```
+
+```{r, echo=F}
+
+stargazer(loo_compare(looS2, looS3), type = "text")
+
+```
+
+```{r, echo=F}
+
+stargazer(loo_compare(looS2, looS4), type = "text")
+
+```
+
+```{r}
+
+stargazer(loo_compare(looS3, looS4), type = "text")
+
+# model 5 is a different regression w/ different dep. var
+
+```
+
+
+## Bayesian - Frequentist Fit Comparisons: 
+
+
+### Bogota Model #1
+
+```{r fit_comparisons, echo = F}
 
 # Bogota: 
 
@@ -978,58 +990,97 @@ loo_compare(looS3, looS4)
   pred_b1 <- posterior_linpred(bogreg1)
   summary(pred_b1[1,])
 
+```
 
-# Lima 1
 
-  print(coef(fit_t2_lim1), digits = 3)
-  
-  pred_l1 <- posterior_linpred(limreg1)
-  summary(pred_l1[1,])
-  
-# Lima 2
+### Lima Model #1
 
-  print(coef(fit_t2_lim2), digits = 3)
+```{r, echo=F}
+
+print(coef(fit_t2_lim1), digits = 3)
+
+pred_l1 <- posterior_linpred(limreg1)
+summary(pred_l1[1,])
+
+```
+
   
-  pred_l2 <- posterior_linpred(limreg2)
-  summary(pred_l2[1,])
+### Lima Model #2
+
+```{r, echo=F}
+
+print(coef(fit_t2_lim2), digits = 3)
+
+pred_l2 <- posterior_linpred(limreg2)
+summary(pred_l2[1,])
+
+```
+
   
-# Lima 3
+### Lima Model #3
   
-  print(coef(fit_t2_lim3), digits = 3)
+```{r, echo=F}
+
+print(coef(fit_t2_lim3), digits = 3)
+
+pred_l3 <- posterior_linpred(limreg3)
+summary(pred_l3[1,])
+
+```
+
   
-  pred_l3 <- posterior_linpred(limreg3)
-  summary(pred_l3[1,])
   
+### Santiago Model #1
   
-# Santiago 1
+```{r, echo=F}
+
+print(coef(fit_t2_s1), digits = 3)
+
+pred_s1 <- posterior_linpred(santreg1)
+summary(pred_s1[1,])
+
+```
+
   
-  print(coef(fit_t2_s1), digits = 3)
+### Santiago Model #2
   
-  pred_s1 <- posterior_linpred(santreg1)
-  summary(pred_s1[1,])
+```{r, echo=F}
+
+print(coef(fit_t2_s2), digits = 3)
+
+pred_s2 <- posterior_linpred(santreg2)
+summary(pred_s2[1,])
+
+```
+
   
-# Santiago 2
+### Santiago Model #3
+
+```{r, echo=F}
+
+print(coef(fit_t2_s3), digits = 3)
+
+pred_s3 <- posterior_linpred(santreg3)
+summary(pred_s3[1,])
+
+```
+
   
-  print(coef(fit_t2_s2), digits = 3)
+### Santiago Model #4
   
-  pred_s2 <- posterior_linpred(santreg1)
-  summary(pred_s2[1,])
+```{r, echo=F}
+
+print((fit_t2_s4), digits = 3)
+
+pred_s4 <- posterior_linpred(santreg4)
+summary(pred_s4[1,])
+
+```
+
   
-# Santiago 3
-  
-  print(coef(fit_t2_s3), digits = 3)
-  
-  pred_s3 <- posterior_linpred(santreg1)
-  summary(pred_s3[1,])
-  
-# Santiago 4
-  
-  print(coef(fit_t2_s4), digits = 3)
-  
-  pred_s4 <- posterior_linpred(santreg1)
-  summary(pred_s4[1,])
-  
-# Santiago 5
+### Santiago Model #5
+
+```{r, echo=F}
   
   print(coef(fit_t2_s5), digits = 3)
   
@@ -1037,12 +1088,15 @@ loo_compare(looS3, looS4)
   summary(pred_s5[1,])
 
 ```
+
+
 \newpage
-#### Model checks done on preferred competing models. <br\>
+
+# Model checks done on preferred competing models.
 
 
 
-###### Bogota: Regression 1
+## Bogota: Regression 1
 ```{r pp_check_Bog, cache=T}
 
 # Bogota
@@ -1050,8 +1104,9 @@ loo_compare(looS3, looS4)
 pp_check(bogreg1, plotfun = "dens_overlay")
 
 ```
+
 \newpage
-###### Lima: Regression 3
+## Lima: Regression 3
 
 ```{r pp_check_Lim, cache=T}
 
@@ -1061,7 +1116,7 @@ pp_check(limreg3, plotfun = "dens_overlay")
 
 
 \newpage
-###### Santiago: Regression 4
+## Santiago: Regression 4
 
 ```{r pp_check_S4, cache=T}
 
@@ -1070,8 +1125,9 @@ pp_check(santreg4, plotfun = "dens_overlay")
 ```
 
 \newpage
-###### Santiago: Regression 5
-######## Regression 5 is a separate model construction and thus was not compared to models 1-4. 
+## Santiago: Regression 5
+
+* Regression 5 is a separate model construction and thus was not compared to models 1-4. 
 
 ```{r pp_check_S5, cache=T}
 
