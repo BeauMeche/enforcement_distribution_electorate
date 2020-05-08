@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.5.7)  8 MAY 2020 03:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.5.7)  8 MAY 2020 17:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -768,114 +768,91 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [1
 
 {c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdft
-ex.map}] [2] [3] [4]
+ex.map}] [2] [3]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-34.
+29.
 (c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-<Meche_politics_dist_rep_files/figure-latex/fig3_grid-1.pdf, id=127, 469.755pt 
-x 325.215pt>
-File: Meche_politics_dist_rep_files/figure-latex/fig3_grid-1.pdf Graphic file (
-type pdf)
-<use Meche_politics_dist_rep_files/figure-latex/fig3_grid-1.pdf>
-Package pdftex.def Info: Meche_politics_dist_rep_files/figure-latex/fig3_grid-1
-.pdf  used on input line 137.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<Meche_politics_dist_rep_files/figure-latex/fig3_grid-2.pdf, id=128, 469.755pt 
-x 325.215pt>
-File: Meche_politics_dist_rep_files/figure-latex/fig3_grid-2.pdf Graphic file (
-type pdf)
-<use Meche_politics_dist_rep_files/figure-latex/fig3_grid-2.pdf>
-Package pdftex.def Info: Meche_politics_dist_rep_files/figure-latex/fig3_grid-2
-.pdf  used on input line 138.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 137--139
-[][]
- []
-
-[5 <./Meche_politics_dist_rep_files/figure-latex/fig3_grid-1.pdf>] [6 <./Meche_
-politics_dist_rep_files/figure-latex/fig3_grid-2.pdf>] [7]
-<Meche_politics_dist_rep_files/figure-latex/extension_missing_data-1.pdf, id=15
-9, 469.755pt x 325.215pt>
+) [4] [5]
+<Meche_politics_dist_rep_files/figure-latex/extension_missing_data-1.pdf, id=13
+8, 469.755pt x 325.215pt>
 File: Meche_politics_dist_rep_files/figure-latex/extension_missing_data-1.pdf G
 raphic file (type pdf)
 <use Meche_politics_dist_rep_files/figure-latex/extension_missing_data-1.pdf>
 Package pdftex.def Info: Meche_politics_dist_rep_files/figure-latex/extension_m
-issing_data-1.pdf  used on input line 196.
+issing_data-1.pdf  used on input line 182.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[8 <./Meche_politics_dist_rep_files/figure-latex/extension_missing_data-1.pdf>]
+[6 <./Meche_politics_dist_rep_files/figure-latex/extension_missing_data-1.pdf>]
 
-Overfull \hbox (60.0pt too wide) in alignment at lines 399--399
+Overfull \hbox (60.0pt too wide) in alignment at lines 385--385
 [][][][][] 
  []
 
 
-Overfull \hbox (75.04036pt too wide) in alignment at lines 605--605
+Overfull \hbox (75.04036pt too wide) in alignment at lines 591--591
 [][][][][][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[9]
+[7]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6
-24.
+13.
 (c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [10] [11] [12] [13] [14] [15]
-<Meche_politics_dist_rep_files/figure-latex/pp_check_Bog-1.pdf, id=222, 469.755
+) [8] [9] [10] [11] [12] [13] [14] [15]
+<Meche_politics_dist_rep_files/figure-latex/pp_check_Bog-1.pdf, id=212, 469.755
 pt x 325.215pt>
 File: Meche_politics_dist_rep_files/figure-latex/pp_check_Bog-1.pdf Graphic fil
 e (type pdf)
 <use Meche_politics_dist_rep_files/figure-latex/pp_check_Bog-1.pdf>
 Package pdftex.def Info: Meche_politics_dist_rep_files/figure-latex/pp_check_Bo
-g-1.pdf  used on input line 858.
+g-1.pdf  used on input line 932.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [16 <./Meche_politics_dist_rep_files/figure-latex/pp_check_Bog-1.pdf>]
-<Meche_politics_dist_rep_files/figure-latex/pp_check_Lim-1.pdf, id=238, 469.755
+<Meche_politics_dist_rep_files/figure-latex/pp_check_Lim-1.pdf, id=228, 469.755
 pt x 325.215pt>
 File: Meche_politics_dist_rep_files/figure-latex/pp_check_Lim-1.pdf Graphic fil
 e (type pdf)
 <use Meche_politics_dist_rep_files/figure-latex/pp_check_Lim-1.pdf>
 Package pdftex.def Info: Meche_politics_dist_rep_files/figure-latex/pp_check_Li
-m-1.pdf  used on input line 865.
+m-1.pdf  used on input line 939.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [17 <./Meche_politics_dist_rep_files/figure-latex/pp_check_Lim-1.pdf>]
-<Meche_politics_dist_rep_files/figure-latex/pp_check_S4-1.pdf, id=253, 469.755p
+<Meche_politics_dist_rep_files/figure-latex/pp_check_S4-1.pdf, id=243, 469.755p
 t x 325.215pt>
 File: Meche_politics_dist_rep_files/figure-latex/pp_check_S4-1.pdf Graphic file
  (type pdf)
 <use Meche_politics_dist_rep_files/figure-latex/pp_check_S4-1.pdf>
 Package pdftex.def Info: Meche_politics_dist_rep_files/figure-latex/pp_check_S4
--1.pdf  used on input line 872.
+-1.pdf  used on input line 946.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [18 <./Meche_politics_dist_rep_files/figure-latex/pp_check_S4-1.pdf>]
-<Meche_politics_dist_rep_files/figure-latex/pp_check_S5-1.pdf, id=268, 469.755p
+<Meche_politics_dist_rep_files/figure-latex/pp_check_S5-1.pdf, id=258, 469.755p
 t x 325.215pt>
 File: Meche_politics_dist_rep_files/figure-latex/pp_check_S5-1.pdf Graphic file
  (type pdf)
 <use Meche_politics_dist_rep_files/figure-latex/pp_check_S5-1.pdf>
 Package pdftex.def Info: Meche_politics_dist_rep_files/figure-latex/pp_check_S5
--1.pdf  used on input line 885.
+-1.pdf  used on input line 959.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 897.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 971.
 [19 <./Meche_politics_dist_rep_files/figure-latex/pp_check_S5-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 897.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 971.
 (./Meche_politics_dist_rep.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 897.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 897.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 971.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 971.
 Package rerunfilecheck Info: File `Meche_politics_dist_rep.out' has not changed
 .
-(rerunfilecheck)             Checksum: 07FDD8CCAD7E1499FA740F54B29E5604;3746.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 897.
+(rerunfilecheck)             Checksum: 282D6EF6C8C463D427C2AE00306F0E0F;3649.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 971.
  ) 
 Here is how much of TeX's memory you used:
- 15384 strings out of 482605
- 267788 string characters out of 5950339
- 528326 words of memory out of 5000000
- 30607 multiletter control sequences out of 15000+600000
+ 15371 strings out of 482605
+ 266970 string characters out of 5950339
+ 528213 words of memory out of 5000000
+ 30595 multiletter control sequences out of 15000+600000
  609747 words of font info for 80 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  41i,16n,46p,1615b,859s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -884,27 +861,28 @@ st, replaced by a fixed one
 
 {c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.en
 c}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
-hit.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
-lm-mathsy.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvi
-ps/lm/lm-ts1.enc}<c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
-1/public/lm/lmbx10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/font
-s/type1/public/lm/lmbx12.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dis
-t/fonts/type1/public/lm/lmmi10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/tex
-mf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTe
-X/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/Beau_M/AppData/Roaming/T
-inyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/Beau_M/AppData/Roam
-ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Beau_M/AppData/
-Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Beau_M/AppD
-ata/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Beau_M/
-AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/B
-eau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/U
-sers/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-<c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt1
-0.pfb>
-Output written on Meche_politics_dist_rep.pdf (19 pages, 1155212 bytes).
+hsy.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
+lm-ts1.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/
+lm/lm-rm.enc}{c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvip
+s/lm/lm-mathit.enc}<c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
+pe1/public/lm/lmbx10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fo
+nts/type1/public/lm/lmbx12.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-d
+ist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/Beau_M/AppData/Roaming/TinyTeX/t
+exmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Beau_M/AppData/Roaming/Tiny
+TeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/Beau_M/AppData/Roaming
+/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/Beau_M/AppData/Ro
+aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Beau_M/AppDat
+a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Beau_M/Ap
+pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Beau_
+M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users
+/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:
+/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pf
+b><c:/Users/Beau_M/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmt
+t10.pfb>
+Output written on Meche_politics_dist_rep.pdf (19 pages, 1161811 bytes).
 PDF statistics:
- 361 PDF objects out of 1000 (max. 8388607)
- 309 compressed objects within 4 object streams
- 80 named destinations out of 1000 (max. 500000)
- 220 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 353 PDF objects out of 1000 (max. 8388607)
+ 305 compressed objects within 4 object streams
+ 81 named destinations out of 1000 (max. 500000)
+ 210 words of extra memory for PDF output out of 10000 (max. 10000000)
 
