@@ -1,7 +1,7 @@
 ---
 title: "Replication: 'The Distributive Politics of Enforcement'"
 author: "Beau Meche"
-date: "2/21/2020"
+date: "5/8/2020"
 header-includes:
     - \usepackage{setspace}\doublespacing
 output:
@@ -66,11 +66,11 @@ The author argues that in many cases, not enforcing these laws is as intentional
 
 # may as well take everything out of the zip file
 
-unzip("Holland_dataverse_repl_01.zip")
+unzip("data/Holland_dataverse_repl_01.zip")
 
-enforcement <- read.dta("Enforcement.dta")
+enforcement <- read.dta("data/Enforcement.dta")
 
-enforce1 <- read_tsv("Enforcement.tab",
+enforce1 <- read_tsv("data/Enforcement.tab",
                      col_types = cols(
   .default = col_double(),
   city = col_character(),
