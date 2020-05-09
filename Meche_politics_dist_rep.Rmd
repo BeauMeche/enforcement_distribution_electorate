@@ -11,6 +11,8 @@ bibliography: "bibliography1.bib"
 #biblio-style: "chicagolike"
 link_citations: true
 toc: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -121,9 +123,44 @@ Overall this vein of inquiry has fascinating ramifications in electoral predicti
 
 # Extension: 
 
-In effort to further explore^[[“All analysis and output code for this replication project as well as the original paper are available here.](https://github.com/BeauMeche/enforcement_distribution_electorate)] the findings from Holland’s work, the same poisson models that comprise ‘Figure 1’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
+Fortunately, I believe that I was able to replicate the major findings from the original paper. In effort to further explore^[[“All analysis and output code for this replication project as well as the original paper are available here.](https://github.com/BeauMeche/enforcement_distribution_electorate)] the findings from Holland’s work, the same poisson models that comprise ‘Figure 1’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
 
 The first exploration was with respect to missing data. In short, there was no place for concern for missing data. Whether this is due to the pre-cleaned data being the only repository made available, the nature of the original research lending a low rate of missing values, or other factors is unknown. It was found to be the case that there were complete records funneled into all models constructed in the original study, and the only ‘missing’ values were variables completely present or missing at the city level. 
+
+```{r extension_missing_data, message=F, warning=F}
+
+## commented code here was used in feeling out the nature of the missing data
+## Upon exploration, I realized that there is no real concern for said missing data in this case, only
+
+library(mice)
+library(naniar)
+
+# enforce1 %>% 
+#   filter(city == "santiago") %>% 
+# miss_var_summary()
+
+# selecting these because they are the only cases of NA values
+
+# enforce1 %>% 
+#   select(right, reports, arrests, salary, margin, employees) %>% 
+#   gg_miss_var(show_pct = T) +
+#   labs(title = "Variables with missing values:",
+#        y = "Percent of values missing") +
+#   scale_y_continuous(breaks = seq(0,70,5))
+
+enforce1 %>% 
+  select(right, reports, arrests, salary, 
+         margin, employees, city) %>% 
+  gg_miss_var(facet = city,
+              show_pct = T) +
+  labs(title = "Missing data by City: A Non-Issue",
+       subtitle = "Percentage of data missing by variable. Any 'missing' cases
+are 100% missing and comprise the list of varaibles excluded
+from the model(s) for that city.",
+       caption = "Original data collected by A. Holland",
+y = "")
+
+```
 
 The second exploration was with regard to the Bayesian regression coefficients and whether they were notably different from the originals. On the whole, the coefficients seemed to be quite similar. The signs of the coefficients were certainly correct, and the actual estimates were either identical or close enough to attribute to rounding error or slight differences in statistical modeling across the transition from the original language ( Stata ) to the one used in this analysis ( R ). 
 
@@ -296,7 +333,7 @@ fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
 
 
 
-```{r beautiful_graph_redundancy, fig.align='left', eval=F, echo=F}
+```{r beautiful_graph_redundancy, fig.align='left', eval=F, include=F}
 
 # \newpage
 
@@ -333,13 +370,7 @@ b_graph
 
 
 
-```{r Begin_appendix_code, include=F, message=F, warning=F}
-
-# # Appendix: 
-# 
-# 
-# 
-# * Figure 1. 
+```{r Begin_appendix_code, message=FALSE, warning=FALSE, include=F}
 
 library(cowplot)
 
@@ -605,36 +636,7 @@ stargazer(fit_t2,
 
 With regard to missing data analysis, there were no points of concern as there were no regression analyses that incorporated missing data. below you can see the summary of data missing from the onset, but at the level of analyses, the individual cities, there were no calculations done on variables with incomplete sets of information. 
 
-```{r extension_missing_data, message=F, warning=F}
 
-## commented code here was used in feeling out the nature of the missing data
-## Upon exploration, I realized that there is no real concern for said missing data in this case, only
-
-library(mice)
-library(naniar)
-
-# enforce1 %>% 
-#   filter(city == "santiago") %>% 
-# miss_var_summary()
-
-# selecting these because they are the only cases of NA values
-
-# enforce1 %>% 
-#   select(right, reports, arrests, salary, margin, employees) %>% 
-#   gg_miss_var(show_pct = T) +
-#   labs(title = "Variables with missing values:",
-#        y = "Percent of values missing") +
-#   scale_y_continuous(breaks = seq(0,70,5))
-
-enforce1 %>% 
-  select(right, reports, arrests, salary, 
-         margin, employees, city) %>% 
-  gg_miss_var(facet = city,
-              show_pct = T) +
-  labs(title = "Missing data by City",
-       caption = "Original data collected by the author of the basis paper: A. Holland")
-
-```
 
 ```{r extension_model_types}
 
