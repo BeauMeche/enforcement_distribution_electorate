@@ -30,6 +30,7 @@ library(foreign)
 library(tinytex)
 library(gt)
 library(bibtex)
+library(robustHD)
 library(rstanarm)
 library(ggthemes)
 library(stargazer)
@@ -48,7 +49,7 @@ library(huxtable)
 
 This paper[@Holland14] looks at police behavior in varying contexts around Latin America to explore what gets prosecuted and what is allowed to go unnoticed. The areas of interest are the relationships between constituency of the powers that be (at a given time) [fig. 1] and how much those individuals in the constituent groups care to have property rights enforced. Involving a great deal of original research, the author does an intriguing job of addressing this question in a way that I think could be complemented by additional Bayesian analysis, so I thought this would be a good project on a topic that I briefly studied previously and can now apply new skills to. 
 
-The author argues that in many cases, not enforcing these laws is as intentional as enforcing them and makes an early assertion of one of her findings where she found up to a five times higher enforcement rate in places where constituents were primarily non-poor (a binary distinction make in the data analysis portion of the research) [fig.1]. Holland uses many standardized poisson regression models [fig. 2], which makes sense in the setting where response variables are the topic of interest. The catch in that model is the concern for invalidation by reverse causality. To counter this point, a supply vs. demand framework is raised as one might find in your favorite introductory economics course with the y-axis showing enforcement frequency and the x-axis showing the count of offenses. The key to this argument is in assuming that the intentional non-enforcement cases would translate to an outward shift in the ‘supply curve’ of enforcement. This framework gives a solid basis to analyze electoral and otherwise political behavior and regional differences. The results of the data and the proposed model seem to support this framework and initial intuition, even if it is specific to the case observed. Becuase of the specificity in political frameworks inquestion here, I would have concerns about the external validity of Holland’s models, but nonetheless I agree that the model results in support for the framework claiming that there is an inverse relationship between police enforcement of vending licensing and quantity of poor individuals voting in a district. 
+The author argues that in many cases, not enforcing these laws is as intentional as enforcing them and makes an early assertion of one of her findings where she found up to a five times higher enforcement rate in places where constituents were primarily non-poor (a binary distinction make in the data analysis portion of the research) [fig.1]. Holland uses many standardized poisson regression models [fig. 2], which makes sense in the setting where response variables are the topic of interest. The catch in that model is the concern for invalidation by reverse causality. To counter this point, a supply vs. demand framework is raised as one might find in your favorite introductory economics course with the y-axis showing enforcement frequency and the x-axis showing the count of offenses. The key to this argument is in assuming that the intentional non-enforcement cases would translate to an outward shift in the ‘supply curve’ of enforcement. This framework gives a solid basis to analyze electoral and otherwise political behavior and regional differences. The results of the data and the proposed model seem to support this framework and initial intuition, even if it is specific to the case observed. Becuase of the specificity in political frameworks in question here, I would have concerns about the external validity of Holland’s models, but nonetheless I agree that the model results in support for the framework claiming that there is an inverse relationship between police enforcement of vending licensing and quantity of poor individuals voting in a district. 
 
 
 
@@ -79,36 +80,6 @@ enforce1 <- read_tsv("Enforcement.tab",
 ```
 
 
-```{r data_exploration, echo=FALSE}
-
-# 
-# \newpage
-# #### Initial Data Exploration
-
-
-# 
-# # variable "lower" is the share of lower-class residents in a given district
-# 
-# glimpse(enforce1)
-# 
-# enforcement %>% 
-#   filter(city == "lima") %>%
-#   ggplot(aes(x = corruption, y = operations)) +
-#   geom_point(aes(color = poor)) +
-#   labs(
-#     title = "Corruption Coefficients and Police Activity",
-#     x = "Number of Operations",
-#     y = "Corruption Scale",
-#     color = "% Poor
-# Population"
-#   ) +
-#   scale_x_continuous(breaks = (seq(0,20, by= 2)))
-
-```
-
-
-
-
 
 # Literature Review:
 
@@ -123,7 +94,7 @@ Overall this vein of inquiry has fascinating ramifications in electoral predicti
 
 # Extension: 
 
-Fortunately, I believe that I was able to replicate the major findings from the original paper. In effort to further explore^[[“All analysis and output code for this replication project as well as the original paper are available here.](https://github.com/BeauMeche/enforcement_distribution_electorate)] the findings from Holland’s work, the same poisson models that comprise ‘Figure 1’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
+Fortunately, I believe that I was able to replicate the major findings from the original paper. In an effort to further explore^[[“All analysis and output code for this replication project as well as the original paper are available here.](https://github.com/BeauMeche/enforcement_distribution_electorate)] the findings from Holland’s work, the same poisson models that comprise ‘Figure 1’ were run through models built with intrinsic Bayesian methods. Because Bayesian inference and regression methods present different types of interpretation of uncertainty and offer a different analytical approach, these results have been compared to the original as a kind of sensitivity analysis with respect to statistical methodology. 
 
 The first exploration was with respect to missing data. In short, there was no place for concern for missing data. Whether this is due to the pre-cleaned data being the only repository made available, the nature of the original research lending a low rate of missing values, or other factors is unknown. It was found to be the case that there were complete records funneled into all models constructed in the original study, and the only ‘missing’ values were variables completely present or missing at the city level. 
 
@@ -164,12 +135,261 @@ y = "")
 
 The second exploration was with regard to the Bayesian regression coefficients and whether they were notably different from the originals. On the whole, the coefficients seemed to be quite similar. The signs of the coefficients were certainly correct, and the actual estimates were either identical or close enough to attribute to rounding error or slight differences in statistical modeling across the transition from the original language ( Stata ) to the one used in this analysis ( R ). 
 
-The third inquiry was a test of the fit of the models. Using the leave-one-out cross validation method of analyzing the Bayesian regressions, there were between 3 and 7 observations per model in the regressions for Lima and Santiago that were deemed to be ‘problematic’ by this analysis. What this tells us is, when point $x$ is excluded from the data and the model re-fit, how well the model would predict said point. A probelmatic value then would imply cases where this extreme-case k-fold analysis indicates a poor prediction of the ommitted point by the model at hand. In small data sets with any level of variance, it seems reasonable at first to assume that there would be a few outlying values that would not be great fits to our model. With that said, too many problematic observations could become worrisome. 
+```{r, data_bogota_regression2, message=F, warning = F}
 
-The final inquiry was with regard to ‘statistical significance’ and its equivalent in Bayesian inference through rstanarm [@rstanPKG] . This portion of the analysis was done by juxtaposing the frequestist confidence intervals with the Bayesian credible intervals for the model parameters. All confidence, credible intervals were evaluated at the $95\%$ significance level. As Bayesian analyses do not involve p-values and t-distributions, but rather posterior distributions of parameter estimates, I found it convenient to compare the intervals between the two model methodologies for a comparison of statistical significance
+# table 2 partial replication w/ standardized coefficients
+# mimicing the methods in the stata code file
+
+# Bogota
+
+tab2 <- enforce1 %>% 
+  filter(city == "bogota") %>% 
+  mutate(slower = standardize(x = lower, centerFun = mean, 
+                              scaleFun = sd),
+         svendors = standardize(x = vendors, centerFun = mean,
+                                scaleFun = sd),
+         sbudget = standardize(x = budget, 
+                               centerFun = mean,
+                               scaleFun = sd),
+         spop = standardize(x = population,
+                                   centerFun = mean,
+                                   scaleFun = sd))
 
 
-```{r figure3_TL, echo=FALSE}
+```
+
+```{r data_lima_regressions, message=F, warning=F}
+
+# tab2_lima
+
+tab2l <- enforce1 %>% 
+  filter(city == "lima") %>% 
+  mutate(slower = standardize(x = lower, centerFun = mean, 
+                            scaleFun = sd),
+       svendors = standardize(x = vendors, centerFun = mean,
+                              scaleFun = sd),
+       sbudget = standardize(x = budget, 
+                             centerFun = mean,
+                             scaleFun = sd),
+       spop = standardize(x = population,
+                                 centerFun = mean,
+                                 scaleFun = sd),
+       smargin = standardize(x = margin, centerFun = mean,
+                             scaleFun = sd),
+       int_ML = lower * margin,
+       s_int_ML = standardize(x = int_ML, centerFun = mean,
+                              scaleFun = sd))
+
+
+```
+
+```{r data_santiago_regressions, warning=F, message=F, results='asis'}
+
+# tab2_santiago
+
+tab2s <- enforce1 %>% 
+  filter(city == "santiago") %>% 
+  mutate(slower = standardize(x = lower, centerFun = mean, 
+                            scaleFun = sd),
+       svendors = standardize(x = vendors, centerFun = mean,
+                              scaleFun = sd),
+       sbudget = standardize(x = budget, 
+                             centerFun = mean,
+                             scaleFun = sd),
+       spop = standardize(x = population,
+                                 centerFun = mean,
+                                 scaleFun = sd),
+       sreports = standardize(x = reports,
+                                centerFun = mean,
+                                scaleFun = sd),
+       smargin = standardize(x = margin, centerFun = mean,
+                             scaleFun = sd),
+       int_ML = lower * margin,
+       s_int_ML = standardize(x = int_ML, centerFun = mean,
+                              scaleFun = sd),
+       
+       # the poisson regression requires integers as poisson models 
+       # are based on counts
+       
+       arrest_T = as.integer(arrests * 1000))
+
+```
+
+
+```{r extension_Bayes_model_types}
+
+# this will feed into regression tables like the previous one, only calculated
+# with Bayesian methods through the rstanarm package and with predictions based 
+# on the median values of the prediction distribution of the 1000 iterations
+# implicit to Bayesian methods and to stan_glm specifically. 
+
+# Bogota regression:
+
+bogreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2, family = poisson,refresh = 0)
+
+# Lima regs:
+
+limreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2l, family = poisson, refresh = 0)
+
+limreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
+              data = tab2l, family = poisson, refresh = 0)
+
+limreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
+                     s_int_ML, 
+                    data = tab2l, family = poisson, refresh = 0)
+
+# Santiago Regs:
+
+santreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
+              data = tab2s, family = poisson, refresh = 0)
+
+santreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
+              data = tab2s, family = poisson, refresh = 0)
+
+santreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
+                     s_int_ML,
+              data = tab2s, family = poisson, refresh = 0)
+
+santreg4 <- stan_glm(operations ~ slower + svendors + sbudget + spop + right,
+              data = tab2s, family = poisson, refresh = 0)
+
+# arrests were decimal values s.t. df$arrests[n] = n/1000, so I mutated
+# class to integer and mulitplied to get the true counts for santiago without
+# affecting the other graphics etc. that use that variable. 
+
+santreg5 <- stan_glm(arrest_T ~ slower + sbudget + spop + right + sreports,
+              data = tab2s, family = poisson, refresh = 0)
+
+
+#           # ,
+#           # limreg1, limreg2, limreg3,
+#           # santreg1, santreg2, santreg3, santreg4, santreg5)
+# 
+# 
+#           # ,
+#           # title = "Bayesian Model Conversion: ",
+#           # covariate.labels=c("Lower", "Vendors", "Budget", "Population", "Margin",
+#           #                    "Margin*Lower", "Right", "Reports"),
+#           # # float.env = "sidewaystable",
+#           # no.space = TRUE,
+#           # column.labels = c("Bogota", "Lima", "Santiago"),
+#           # column.separate = c(1, 3, 5),
+#           # type = "text")
+# 
+# 
+# # summary(z, digits = 4)
+# # summary(q, digits = 4)
+
+
+```
+
+\newpage
+
+```{r bog_lim_table}
+
+h_tab1 <- huxreg("(B 1)" = bogreg1, 
+                 "(L 1)" = limreg1,
+                 "(L 2)" = limreg2,
+                 "(L 3)" = limreg3,
+                 error_format = "({std.error})",
+                 align = ".",
+                 stars = NULL,
+                 statistics = c('Num. Observations' = 'nobs'),
+                 coefs = c("Intercept" = "(Intercept)",
+                           "Lower" = "slower",
+                           "Vendors" = "svendors",
+                           "Budget" = "sbudget",
+                           "Population" = "spop",
+                           "Margin" = "smargin",
+                           "Margin*Lower" = "s_int_ML")) %>% 
+  set_caption("Bogota and Lima") %>% 
+  add_footnote("B1, L1-3 indicate regression country / model number from the replicated regression model table. Numerically identified models contain mirrored variables, but are run through a Bayesian model.")
+
+h_tab1
+
+```
+
+```{r santiago_h_table}
+
+h_tab2 <- huxreg("(1)" = santreg1,
+                 "(2)" = santreg2,
+                 "(3)" = santreg3,
+                 "(4)" = santreg4,
+                 "(5)" = santreg5,
+                 error_format = "({std.error})",
+                 align = ".",
+                 stars = NULL,
+                 statistics = c('Num. Observations' = 'nobs'),
+                 coefs = c("Intercept" = "(Intercept)",
+                           "Lower" = "slower",
+                           "Vendors" = "svendors",
+                           "Budget" = "sbudget",
+                           "Population" = "spop",
+                           "Margin" = "smargin",
+                           "Margin*Lower" = "s_int_ML")) %>% 
+  set_caption("Santiago") %>% 
+  add_footnote("(1)-(5) indicate model number from the replicated regression model table. Numerically identified models contain mirrored variables, but are run through a Bayesian model.")
+
+h_tab2
+
+```
+
+The third inquiry was a test of the fit of the models. Using the leave-one-out cross validation method of analyzing the Bayesian regressions, there were between 3 and 7 observations per model in the regressions for Lima and Santiago that were deemed to be ‘problematic’ by this analysis. What this tells us is, when point $x$ is excluded from the data and the model re-fit, how well the model would predict said point. A probelmatic value then would imply cases where this extreme-case k-fold analysis indicates a poor prediction of the ommitted point by the model at hand. In small data sets with any level of variance, it seems reasonable at first to assume that there would be a few outlying values that would not be great fits to our model. With that said, too many problematic observations could become worrisome. See appendix for the endless iterations of model cross-checking. Taking the preferred model, by LOO compared standards, I also looked at the density overlay plots to observe similarity, or lack thereof, between the model and replicated data from the posterior distribution. 
+
+
+
+## Comparing the Bayesian models to several replicated datasets as a visual test for model fit renders the following relationships: 
+
+### Bogota: Regression 1
+
+```{r pp_check_Bog, cache=F}
+
+# Bogota
+
+pp_check(bogreg1, plotfun = "dens_overlay")
+
+```
+
+### Lima: Regression 3
+
+```{r pp_check_Lim, cache=F}
+
+pp_check(limreg3, plotfun = "dens_overlay")
+
+```
+
+### Santiago: Regression 4
+
+```{r pp_check_S4, cache=F}
+
+pp_check(santreg4, plotfun = "dens_overlay")
+
+```
+
+### Santiago: Regression 5
+
+* Regression 5 is a separate model construction and thus was not compared to models 1-4. 
+
+```{r pp_check_S5, cache=F}
+
+pp_check(santreg5, plotfun = "dens_overlay")
+
+```
+
+
+
+The final inquiry was with regard to ‘statistical significance’ and its equivalent in Bayesian inference through rstanarm [@rstanPKG] . This portion of the analysis was done by juxtaposing the frequestist confidence intervals with the Bayesian credible intervals for the model parameters. All confidence, credible intervals were evaluated at the $95\%$ significance level. As Bayesian analyses do not involve p-values and t-distributions, but rather posterior distributions of parameter estimates, I found it convenient to compare the intervals between the two model methodologies for a comparison of statistical significance. The results of this comparison were quire similar, with a great majority of values mirroring significance at the $95\%$ level, absolute values being relevantly similar, and sign matching. 
+
+In conclusion, this study shows a substantial robustness to change in the model theory, as the statistical significance shows insubstantial variation. Replicating this study through Bayesian methods results in identical or quite similar regression coefficient values and error metrics where applicable. There may be room to explore the outlier cases, though more data would likely be difficult to obtain given the nature of the rigor of the original data acquisition. I have found no conclusions outside of or contrary to the study, and my own extension's findings stand in support of Holland's original work. 
+
+\newpage
+
+# Appendix:
+
+
+```{r AP_figure3_TL, echo=FALSE}
 
 top_left <- enforce1 %>% 
   mutate(poordistrict = as.integer(poordistrict)) %>% 
@@ -210,7 +430,7 @@ TL <- top_left %>%
 
 
 
-```{r fig3_TR, warning=F}
+```{r AP_fig3_TR, warning=F}
 
 # missing value warning, unsure why, blocked for milestone 5
 
@@ -241,7 +461,7 @@ TR <- top_right %>%
 
 ```
 
-```{r fig3_BL, echo=F}
+```{r AP_fig3_BL, echo=F}
 
 # this is the plot for Santiago
 
@@ -270,7 +490,7 @@ BL <- bot_left %>%
 
 ```
 
-```{r fig3_BR, warning=F}
+```{r AP_fig3_BR, warning=F}
 
 # this is the plot for Santiago (crime reports)
 
@@ -298,40 +518,6 @@ BR <- bot_right %>%
   theme(legend.position="bottom")
 
 ```
-
-```{r, bogota_regression, message=F, warning = F}
-# table 2 partial replication w/ standardized coefficients
-# mimicing the methods in the stata code file
-
-library(robustHD)
-
-tab2 <- enforce1 %>% 
-  filter(city == "bogota") %>% 
-  mutate(slower = standardize(x = lower, centerFun = mean, 
-                              scaleFun = sd),
-         svendors = standardize(x = vendors, centerFun = mean,
-                                scaleFun = sd),
-         sbudget = standardize(x = budget, 
-                               centerFun = mean,
-                               scaleFun = sd),
-         spop = standardize(x = population,
-                                   centerFun = mean,
-                                   scaleFun = sd))
-
-fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2, family = poisson)
-
-# stargazer(fit_t2, type = "text")
-
-# poisson[] for reg model? 
-
-# my.poisson.mod <- glm(fatalities ~ attack, family = "poisson", data = mydata)
-
-
-```
-
-
-
 
 ```{r beautiful_graph_redundancy, fig.align='left', eval=F, include=F}
 
@@ -368,8 +554,6 @@ b_graph
 ```
 
 
-
-
 ```{r Begin_appendix_code, message=FALSE, warning=FALSE, include=F}
 
 library(cowplot)
@@ -378,8 +562,7 @@ plot_grid(TL, TR); plot_grid(BL, BR)
 
 ```
 
-
-```{r figure_4_holland_rep}
+```{r AP_figure_4_holland_rep}
 
 # don't think I need the original for comparison any longer
 
@@ -456,99 +639,14 @@ pred2 <- predict(fit_f2, newdata = new.lower2)
 
 ```
 
-```{r fig_2_placeholder, warning=F}
-
-# removing message about removed rows
-
-bog_mean <- pull(op_mean[1,2])
-
-pt1 <- enforce1 %>%
-  filter(lower >= 0 & lower <= 70) %>% 
-  ggplot(aes(y = operations/bog_mean,
-             x = lower)) +
-  geom_smooth(aes(group = city,
-                color = city),
-                method = "glm",
-                se = T) +
-  scale_y_continuous(limits = c(0,5),
-                     breaks = seq(0,5,1)) +
-  scale_x_continuous(breaks = seq(0,70,20)) +
-  labs(
-    title = "The following graphs are my closest attempt at figure 2",
-    y = "operations / average ops. in Bogota",
-    x = "Percent lower class"
-  )
-
-
-pt2 <- enforce1 %>%
-  filter(vendors >= 0 & vendors <= 12) %>% 
-  ggplot(aes(y = operations/bog_mean,
-             x = vendors)) +
-  geom_smooth(aes(group = city,
-                color = city),
-                method = "glm",
-                se = T) +
-  scale_y_continuous(limits = c(0,5),
-                     breaks = seq(0,5,1)) +
-  scale_x_continuous(breaks = seq(0,12,3)) +
-  labs(
-    y = "operations / average ops. in Bogota",
-    x = "Unlicensed Vendors (thousands)"
-  )
-
-# pt1; pt2
-
-
-```
-
-```{r, bogota_regression2, message=F, warning = F}
-# table 2 partial replication w/ standardized coefficients
-# mimicing the methods in the stata code file
-
-library(robustHD)
-
-tab2 <- enforce1 %>% 
-  filter(city == "bogota") %>% 
-  mutate(slower = standardize(x = lower, centerFun = mean, 
-                              scaleFun = sd),
-         svendors = standardize(x = vendors, centerFun = mean,
-                                scaleFun = sd),
-         sbudget = standardize(x = budget, 
-                               centerFun = mean,
-                               scaleFun = sd),
-         spop = standardize(x = population,
-                                   centerFun = mean,
-                                   scaleFun = sd))
+```{r AP_freq_reg_Bogota, echo=F}
 
 fit_t2 <- glm(operations ~ slower + svendors + sbudget + spop,
               data = tab2, family = poisson)
 
-# stargazer(fit_t2, type = "text")
-
-
 ```
 
-```{r lima_regressions, message=F, warning=F}
-
-# tab2_lima
-
-tab2l <- enforce1 %>% 
-  filter(city == "lima") %>% 
-  mutate(slower = standardize(x = lower, centerFun = mean, 
-                            scaleFun = sd),
-       svendors = standardize(x = vendors, centerFun = mean,
-                              scaleFun = sd),
-       sbudget = standardize(x = budget, 
-                             centerFun = mean,
-                             scaleFun = sd),
-       spop = standardize(x = population,
-                                 centerFun = mean,
-                                 scaleFun = sd),
-       smargin = standardize(x = margin, centerFun = mean,
-                             scaleFun = sd),
-       int_ML = lower * margin,
-       s_int_ML = standardize(x = int_ML, centerFun = mean,
-                              scaleFun = sd))
+```{r  AP_freq_regs_Lima, echo=F}
 
 fit_t2_lim1 <- glm(operations ~ slower + svendors + sbudget + spop,
               data = tab2l, family = poisson)
@@ -560,44 +658,9 @@ fit_t2_lim3 <- glm(operations ~ slower + svendors + sbudget + spop + smargin +
                      s_int_ML,
               data = tab2l, family = poisson)
 
-# stargazer(fit_t2_lim1, fit_t2_lim2, fit_t2_lim3, type = "text")
-  
-
 ```
 
-
-* Figure 2
-
-
-```{r santiago_regressions, warning=F, message=F, results='asis'}
-
-# tab2_santiago
-
-tab2s <- enforce1 %>% 
-  filter(city == "santiago") %>% 
-  mutate(slower = standardize(x = lower, centerFun = mean, 
-                            scaleFun = sd),
-       svendors = standardize(x = vendors, centerFun = mean,
-                              scaleFun = sd),
-       sbudget = standardize(x = budget, 
-                             centerFun = mean,
-                             scaleFun = sd),
-       spop = standardize(x = population,
-                                 centerFun = mean,
-                                 scaleFun = sd),
-       sreports = standardize(x = reports,
-                                centerFun = mean,
-                                scaleFun = sd),
-       smargin = standardize(x = margin, centerFun = mean,
-                             scaleFun = sd),
-       int_ML = lower * margin,
-       s_int_ML = standardize(x = int_ML, centerFun = mean,
-                              scaleFun = sd),
-       
-       # the poisson regression requires integers as poisson models 
-       # are based on counts
-       
-       arrest_T = as.integer(arrests * 1000))
+```{r AP_freq_regs_Santiago, echo=F}
 
 fit_t2_s1 <- glm(operations ~ slower + svendors + sbudget + spop,
               data = tab2s, family = poisson)
@@ -614,7 +677,9 @@ fit_t2_s4 <- glm(operations ~ slower + svendors + sbudget + spop + right,
 
 fit_t2_s5 <- glm(arrest_T ~ slower + sbudget + spop + right + sreports,
               data = tab2s, family = poisson)
+```
 
+```{r, holland_reg_replication, echo = F, warning=F, results='asis'}
 
 stargazer(fit_t2,
           fit_t2_lim1, fit_t2_lim2, fit_t2_lim3,
@@ -630,151 +695,13 @@ stargazer(fit_t2,
 
 ```
 
-\newpage
+```{r loo_previous_models_lima, cache = F, message=F, fig.align='left', eval=F, echo=F}
 
-* Figure 3 
+# extension code here, the output was not fit for a table in the text, but 
+# it functions here should anyong be curious
 
-With regard to missing data analysis, there were no points of concern as there were no regression analyses that incorporated missing data. below you can see the summary of data missing from the onset, but at the level of analyses, the individual cities, there were no calculations done on variables with incomplete sets of information. 
-
-
-
-```{r extension_model_types}
-
-# this will be a regression table like the previous one, only calculated with 
-# Bayesian methods through the rstanarm package and with predictions based on 
-# the median values of the prediction distribution of the 1000 iterations
-# implicit to Bayesian methods and to stan_glm specifically. 
-
-# Bogota regression: check out 'stan_glmer'
-bogreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2, family = poisson,refresh = 0)
-
-limreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2l, family = poisson, refresh = 0)
-
-limreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
-              data = tab2l, family = poisson, refresh = 0)
-
-limreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
-                     s_int_ML, 
-                    data = tab2l, family = poisson, refresh = 0)
-
-santreg1 <- stan_glm(operations ~ slower + svendors + sbudget + spop,
-              data = tab2s, family = poisson, refresh = 0)
-
-santreg2 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin,
-              data = tab2s, family = poisson, refresh = 0)
-
-santreg3 <- stan_glm(operations ~ slower + svendors + sbudget + spop + smargin +
-                     s_int_ML,
-              data = tab2s, family = poisson, refresh = 0)
-
-santreg4 <- stan_glm(operations ~ slower + svendors + sbudget + spop + right,
-              data = tab2s, family = poisson, refresh = 0)
-
-# arrests were decimal values s.t. df$arrests[n] = n/1000, so I mutated
-# class to integer and mulitplied to get the true counts for santiago without
-# affecting the other graphics etc. that use that variable. 
-
-santreg5 <- stan_glm(arrest_T ~ slower + sbudget + spop + right + sreports,
-              data = tab2s, family = poisson, refresh = 0)
-
-
-# 
-#           # ,
-#           # limreg1, limreg2, limreg3,
-#           # santreg1, santreg2, santreg3, santreg4, santreg5)
-# 
-# 
-#           # ,
-#           # title = "Bayesian Model Conversion: ",
-#           # covariate.labels=c("Lower", "Vendors", "Budget", "Population", "Margin",
-#           #                    "Margin*Lower", "Right", "Reports"),
-#           # # float.env = "sidewaystable",
-#           # no.space = TRUE,
-#           # column.labels = c("Bogota", "Lima", "Santiago"),
-#           # column.separate = c(1, 3, 5),
-#           # type = "text")
-# 
-# 
-# # summary(z, digits = 4)
-# # summary(q, digits = 4)
-
-
-```
-
-\newpage
-# Extension: pt.2
-
-(a) The object of this portion is to compare modeling methods between standard poisson regressions and those done in the Bayesian method. Errors, estimate measures, and fit metrics are slightly different, so we will see whether this methodological change brings up points of concern
-
-
-(1) Figure 4: Bogota and Lima:
-
-```{r bog_lim_table}
-
-h_tab1 <- huxreg("(B 1)" = bogreg1, 
-                 "(L 1)" = limreg1,
-                 "(L 2)" = limreg2,
-                 "(L 3)" = limreg3,
-                 error_format = "({std.error})",
-                 align = ".",
-                 stars = NULL,
-                 statistics = c('Num. Observations' = 'nobs'),
-                 coefs = c("Intercept" = "(Intercept)",
-                           "Lower" = "slower",
-                           "Vendors" = "svendors",
-                           "Budget" = "sbudget",
-                           "Population" = "spop",
-                           "Margin" = "smargin",
-                           "Margin*Lower" = "s_int_ML")) %>% 
-  set_caption("Bogota and Lima") %>% 
-  add_footnote("B1, L1-3 indicate regression country / model number from the replicated regression model table")
-
-h_tab1
-
-```
-
-
-(2) Figure 5: Santiago:
-
-```{r santiago_h_table}
-
-h_tab2 <- huxreg("(1)" = santreg1,
-                 "(2)" = santreg2,
-                 "(3)" = santreg3,
-                 "(4)" = santreg4,
-                 "(5)" = santreg5,
-                 error_format = "({std.error})",
-                 align = ".",
-                 stars = NULL,
-                 statistics = c('Num. Observations' = 'nobs'),
-                 coefs = c("Intercept" = "(Intercept)",
-                           "Lower" = "slower",
-                           "Vendors" = "svendors",
-                           "Budget" = "sbudget",
-                           "Population" = "spop",
-                           "Margin" = "smargin",
-                           "Margin*Lower" = "s_int_ML")) %>% 
-  set_caption("Santiago")
-
-h_tab2
-
-```
-
-
-
-
-
-\newpage
-
-## LOO-Comparisons: 
-
-(b) This section contains leave-one-out cross-validation model comparisons between the Bayesian models from part 'a' for cities with multiple regressions in the original analysis. For those unfamiliar, the favored model is shown with zero values for 'elpd_diff' and 'se_diff'. The preferred models in the LOO-compared perspective are the models for which I provide density overlay plots below in part 'd'.
 
 ### Lima, Peru:
- 
-```{r loo_previous_models_lima, cache = F, message=F, fig.align='left'}
 
 # this model had 3 problematic observations
 
@@ -802,11 +729,10 @@ stargazer(loo_compare(looL1, looL3), type = "text")
 
 ```
 
+```{r loo_prev_models_santiago, cache = F, message=F, eval=F, echo=F}
 
-
-
-
-```{r loo_prev_models_santiago, cache = F, message=F}
+# extension code here, the output was not fit for a table in the text, but 
+# it functions here should anyong be curious
 
 # 5 problematic observations
 
@@ -831,205 +757,99 @@ looS5 <- loo(santreg5, k_threshold = 0.7)
 
 ```
 
-### Santiago, Chile:
+```{r, echo=F, eval=F}
 
-```{r, echo=F}
+### Santiago, Chile:
 
 stargazer(loo_compare(looS1, looS2), type = "text")
 
-```
-
-```{r, echo=F}
 
 stargazer(loo_compare(looS1, looS3), type = "text")
 
-```
-
-```{r, echo=F}
 
 stargazer(loo_compare(looS1, looS4), type = "text")
 
-```
-
-```{r, echo=F}
 
 stargazer(loo_compare(looS2, looS3), type = "text")
 
-```
-
-```{r, echo=F}
 
 stargazer(loo_compare(looS2, looS4), type = "text")
 
-```
-
-```{r}
 
 stargazer(loo_compare(looS3, looS4), type = "text")
 
 # model 5 is a different regression w/ different dep. var
 
 ```
-\newpage
+
+```{r fit_comparisons, message=F, echo = F, eval=F}
 
 ## Bayesian - Frequentist Fit Comparisons: 
 
-(c) In this section, the first stat line contains the model coefficients for the indicated model run with frequentist model construction and the subsequent stat lines show $95\%$ credible intervals for the Bayesian version of the same model. 
-
+# (c) In this section, the first stat line contains the model coefficients for the indicated model run with frequentist model construction and the subsequent stat lines show $95\%$ credible intervals for the Bayesian version of the same model. 
 
 ### Bogota Model #1
 
-```{r fit_comparisons, message=F, echo = F}
 
-# Bogota: 
 
 print(confint(fit_t2), digits = 3)
 
 round(posterior_interval(bogreg1, prob = .95), 4)
 
-```
-
 
 ### Lima Model #1
-
-```{r, message=F, echo=F}
 
 print(confint(fit_t2_lim1), digits = 3)
 
 round(posterior_interval(limreg1, prob = .95), 4)
 
-```
 
-  
 ### Lima Model #2
-
-```{r, message=F, echo=F}
 
 print(confint(fit_t2_lim2), digits = 3)
 
 round(posterior_interval(limreg2, prob = .95), 3)
 
-```
 
-  
 ### Lima Model #3
-  
-```{r, message=F, echo=F}
 
 print(confint(fit_t2_lim3), digits = 3)
 
 round(posterior_interval(limreg3, prob = .95), 3)
 
-```
-
-  
-  
 ### Santiago Model #1
-  
-```{r, echo=F, message=F}
 
 print(confint(fit_t2_s1), digits = 3)
 
 round(posterior_interval(santreg1, prob = .95), 3)
 
-```
 
-  
 ### Santiago Model #2
-  
-```{r, message=F, echo=F}
 
 print(confint(fit_t2_s2), digits = 3)
 
 round(posterior_interval(santreg2, prob = .95), 3)
 
-```
-
-  
 ### Santiago Model #3
-
-```{r, message=F, echo=F}
 
 print(confint(fit_t2_s3), digits = 3)
 
 round(posterior_interval(santreg3, prob = .95), 3)
 
-```
 
-  
 ### Santiago Model #4
-  
-```{r, message=F, echo=F}
 
 print(confint(fit_t2_s4), digits = 3)
 
 round(posterior_interval(santreg4, prob = .95), 3)
 
-```
 
-  
 ### Santiago Model #5
-
-```{r, message=F, echo=F}
   
-  print(confint(fit_t2_s5), digits = 3)
-  
-  round(posterior_interval(santreg5, prob = .95), 3)
+print(confint(fit_t2_s5), digits = 3)
+
+round(posterior_interval(santreg5, prob = .95), 3)
 
 ```
-
-
-\newpage
-
-# Model checks done on preferred competing models.
-
-
-
-## Bogota: Regression 1
-```{r pp_check_Bog, cache=F}
-
-# Bogota
-
-pp_check(bogreg1, plotfun = "dens_overlay")
-
-```
-
-\newpage
-## Lima: Regression 3
-
-```{r pp_check_Lim, cache=F}
-
-pp_check(limreg3, plotfun = "dens_overlay")
-
-```
-
-
-\newpage
-## Santiago: Regression 4
-
-```{r pp_check_S4, cache=F}
-
-pp_check(santreg4, plotfun = "dens_overlay")
-
-```
-
-\newpage
-## Santiago: Regression 5
-
-* Regression 5 is a separate model construction and thus was not compared to models 1-4. 
-
-```{r pp_check_S5, cache=F}
-
-pp_check(santreg5, plotfun = "dens_overlay")
-
-```
-
-
-
-
-
-
-
-
 
 
