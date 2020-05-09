@@ -1,2 +1,0 @@
-Enforcement.dta (application/x-stata) 11860 bytes.
-EnforcementPolitics.do (text/x-stata-syntax; charset=US-ASCII) 8511 bytes.
